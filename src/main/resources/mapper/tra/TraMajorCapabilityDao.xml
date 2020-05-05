@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.binbinhan.modules.tra.dao.TraMajorCapabilityDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.binbinhan.modules.tra.entity.TraMajorCapabilityEntity" id="traMajorCapabilityMap">
+        <result property="standardCapacityNumber" column="standard_capacity_number"/>
+        <result property="supportWeight" column="support_weight"/>
+        <result property="capacityNumber" column="capacity_number"/>
+        <result property="parentNode" column="parent_node"/>
+        <result property="capabilityDescription" column="capability_description"/>
+        <result property="createTime" column="create_time"/>
+        <result property="trainingId" column="training_id"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.binbinhan.modules.tra.dao.TraTratrainingGoalSupportListDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.binbinhan.modules.tra.entity.TraTratrainingGoalSupportListEntity" id="traTratrainingGoalSupportListMap">
+        <result property="id" column="id"/>
+        <result property="trainingObjectives" column="training_objectives"/>
+        <result property="graduationRequirements" column="graduation_requirements"/>
+        <result property="weight" column="weight"/>
+        <result property="createTime" column="create_time"/>
+        <result property="trainingId" column="training_id"/>
+    </resultMap>
+
+
+</mapper>

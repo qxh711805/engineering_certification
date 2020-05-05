@@ -1,0 +1,212 @@
+$(function () {
+    $("#jqGrid").jqGrid({
+        url: baseURL + 'sys/user/list',
+        datatype: "json",
+        colModel: [
+            {label: '用户ID', name: 'userId', index: "user_id", width: 40, key: true},
+            // { label: '用户名', name: 'username', width: 75 },
+            {label: '用户名', name: 'name', width: 70},
+            {label: '学校名称', name: 'schoolName', sortable: false, width: 70},
+            {label: '学校简码', name: 'schoolCode', sortable: false, width: 70},
+            {label: '学院名称', name: 'collegeName', sortable: false, width: 70},
+            {label: '系名', name: 'department', sortable: false, width: 70},
+            {label: '专业', name: 'major', sortable: false, width: 70},
+            {label: '工号/学号', name: 'jobNumber', sortable: false, width: 70},
+            {label: '身份证号', name: 'idNumber', sortable: false, width: 70},
+            {label: '邮箱', name: 'email', width: 80},
+            {label: '手机号', name: 'mobile', width: 90},
+            {
+                label: '状态', name: 'status', width: 50, formatter: function (value, options, row) {
+                    return value === 0 ?
+                        '<span class="label label-danger">禁用</span>' :
+                        '<span class="label label-success">正常</span>';
+                }
+            },
+            {label: '创建时间', name: 'createTime', index: "create_time", width: 80},
+            {
+                label: '操作', name: 'caozuo', width: 120,
+                formatter: function (value, options, row) {
+                    let r =
+                        '<a title="修改用户" class="btn btn-xs btn-primary" onclick="vm.update(' + options.userId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
+                        '<a title="删除用户" class="btn btn-xs btn-primary" onclick="vm.del(' + options.userId + ')"><i class="fa fa-trash-o"></i></i></a>' +
+                        '<a title="添加角色" class="btn btn-xs btn-primary"  onclick="vm.addRole(' + options + ')"><i class="fa fa-check"></i></a>' +
+                        '<a title="删除角色" class="btn btn-xs btn-primary" onclick="vm.delRole(' + options + ')"><i class="fa fa-times"></i></a>';
+                    return r;
+                }
+            }
+        ],
+        viewrecords: true,
+        height: 385,
+        rowNum: 10,
+        rowList: [10, 30, 50],
+        rownumbers: true,
+        rownumWidth: 25,
+        autowidth: true,
+        multiselect: true,
+        pager: "#jqGridPager",
+        jsonReader: {
+            root: "page.list",
+            page: "page.currPage",
+            total: "page.totalPage",
+            records: "page.totalCount"
+        },
+        prmNames: {
+            page: "page",
+            rows: "limit",
+            order: "order"
+        },
+        gridComplete: function () {
+            //隐藏grid底部滚动条
+            $("#jqGrid").closest(".ui-jqgrid-bdiv").css({"overflow-x": "hidden"});
+        }
+    });
+});
+var setting = {
+    data: {
+        simpleData: {
+            enable: true,
+            idKey: "deptId",
+            pIdKey: "parentId",
+            rootPId: -1
+        },
+        key: {
+            url: "nourl"
+        }
+    }
+};
+var ztree;
+
+var vm = new Vue({
+    el: '#rrapp',
+    data: {
+        q: {
+            username: null
+        },
+        showList: true,
+        title: null,
+        roleList: {},
+        user: {
+            status: 1,
+            deptId: null,
+            deptName: null,
+            roleIdList: []
+        }
+    },
+    methods: {
+        query: function () {
+            vm.reload();
+        },
+        add: function () {
+            vm.showList = false;
+            vm.title = "新增";
+            vm.user = {deptName: null, deptId: null, status: 1, roleIdList: []};
+        },
+        update: function (userId) {
+            if (userId == null) {
+                userId = getSelectedRow();
+            }
+            if (userId == null) {
+                return;
+            }
+
+            vm.showList = false;
+            vm.title = "修改";
+
+            vm.getUser(userId);
+            //获取角色信息
+            this.getRoleList();
+        },
+        permissions: function () {
+            var userId = getSelectedRow();
+            if (userId == null) {
+                return;
+            }
+
+            window.location.href = baseURL + "sys/permissions/index/" + userId;
+        },
+        addRole: function (user) {
+
+        },
+        delRole: function (user) {
+            confirm('确定要删除'+user.name+'的角色？', function () {
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + "sys/user/deleteRole",
+                    contentType: "application/json",
+                    data: JSON.stringify(user),
+                    success: function (r) {
+                        if (r.code == 0) {
+                            alert('操作成功', function () {
+                                vm.reload();
+                            });
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+            });
+        },
+        del: function (userIds) {
+
+            if (userIds == null) {
+                userIds = getSelectedRows();
+            }
+            // var userIds = getSelectedRows();
+
+            if (userIds == null) {
+                return;
+            }
+            confirm('确定要删除选中的记录？', function () {
+                $.ajax({
+                    type: "POST",
+                    url: baseURL + "sys/user/delete",
+                    contentType: "application/json",
+                    data: JSON.stringify(userIds),
+                    success: function (r) {
+                        if (r.code == 0) {
+                            alert('操作成功', function () {
+                                vm.reload();
+                            });
+                        } else {
+                            alert(r.msg);
+                        }
+                    }
+                });
+            });
+        },
+        saveOrUpdate: function () {
+            var url = vm.user.userId == null ? "sys/user/save" : "sys/user/update";
+            $.ajax({
+                type: "POST",
+                url: baseURL + url,
+                contentType: "application/json",
+                data: JSON.stringify(vm.user),
+                success: function (r) {
+                    if (r.code === 0) {
+                        alert('操作成功', function () {
+                            vm.reload();
+                        });
+                    } else {
+                        alert(r.msg);
+                    }
+                }
+            });
+        },
+        getUser: function (userId) {
+            $.get(baseURL + "sys/user/info/" + userId, function (r) {
+                vm.user = r.user;
+                vm.user.password = null;
+
+                vm.getDept();
+            });
+        },
+        reload: function () {
+            vm.showList = true;
+            var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+            $("#jqGrid").jqGrid('setGridParam', {
+                postData: {'username': vm.q.username},
+                page: page
+            }).trigger("reloadGrid");
+        }
+    }
+});
