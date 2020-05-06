@@ -5,7 +5,8 @@ $(function () {
         colModel: [
             {label: '用户ID', name: 'userId', index: "user_id", width: 40, key: true},
             // { label: '用户名', name: 'username', width: 75 },
-            {label: '用户名', name: 'name', width: 70},
+            {label: '用户名', name: 'username', width: 70},
+            {label: '姓名', name: 'name', width: 70},
             {label: '学校名称', name: 'schoolName', sortable: false, width: 70},
             {label: '学校简码', name: 'schoolCode', sortable: false, width: 70},
             {label: '学院名称', name: 'collegeName', sortable: false, width: 70},
@@ -29,8 +30,8 @@ $(function () {
                     let r =
                         '<a title="修改用户" class="btn btn-xs btn-primary" onclick="vm.update(' + row.userId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
                         '<a title="删除用户" class="btn btn-xs btn-primary" onclick="vm.del(' + row.userId + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>' +
-                        '<a title="添加角色" class="btn btn-xs btn-primary" onclick="vm.addRole(' + row + ')" style="margin-left: 5px"><i class="fa fa-check"></i></a>' +
-                        '<a title="删除角色" class="btn btn-xs btn-primary" onclick="vm.delRole(' + row + ')" style="margin-left: 5px"><i class="fa fa-times"></i></a>';
+                        '<a title="添加角色" class="btn btn-xs btn-primary" onclick="vm.addRole(' + row.userId + ')" style="margin-left: 5px"><i class="fa fa-check"></i></a>' +
+                        '<a title="删除角色" class="btn btn-xs btn-primary" onclick="vm.delRole(' + row.userId + ')" style="margin-left: 5px"><i class="fa fa-times"></i></a>';
                     return r;
                 }
             }
@@ -122,22 +123,37 @@ var vm = new Vue({
 
             window.location.href = baseURL + "sys/permissions/index/" + userId;
         },
-        addRole: function (user) {
-            $.ajax({
-                type: "POST",
-                url: baseURL + "sys/user/addRole",
-                contentType: "application/json",
-                data: JSON.stringify(user),
-                success: function (r) {
-                    if (r.code == 0) {
-                        alert('操作成功', function () {
-                            vm.reload();
-                        });
-                    } else {
-                        alert(r.msg);
-                    }
+        addRole: function (userId) {
+            layer.open({
+                type: 2 //此处以iframe举例
+                ,title: '当你选择该窗体时，即会在最顶端'
+                ,area: ['390px', '260px']
+                ,shade: 0
+                ,maxmin: true
+                ,content:content
+                ,btn: ['确认添加', '返回'] //只是为了演示
+                ,yes: function(){
+
                 }
-            });
+                ,btn2: function(){
+                    layer.closeAll();
+                }
+            })
+            // $.ajax({
+            //     type: "POST",
+            //     url: baseURL + "sys/user/addRole",
+            //     contentType: "application/json",
+            //     data: JSON.stringify(user),
+            //     success: function (r) {
+            //         if (r.code == 0) {
+            //             alert('操作成功', function () {
+            //                 vm.reload();
+            //             });
+            //         } else {
+            //             alert(r.msg);
+            //         }
+            //     }
+            // });
         },
         delRole: function (user) {
             confirm('确定要删除' + user.name + '的角色？', function () {
@@ -209,6 +225,47 @@ var vm = new Vue({
                 vm.user = r.user;
                 vm.user.password = null;
 
+            });
+        },
+        excelImp: function (event) {
+            var diaindx=layer.open({
+                type: 2,
+                // offset: ['50px', '100px'], // 弹出位置
+                area: ["500px", "310px"],
+                title: "选择上传文件",
+                shade: [0.1, '#000'],
+                maxmin: false, //开启最大化最小化按钮
+                content: "user_excel_import.html",
+                scrollbar: false,
+                btn: ['确定', '关闭'],
+                yes: function(index, layero){
+                    //loading层
+                    var loadingIndex = layer.load(2, {shade: [0.1,'#fff']});
+                    $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function(r) {
+                        if(r.code<0){
+                            layer.close(loadingIndex);
+                            alert(r.msg);
+                        }else{
+                            msgSuccess('导入成功', function(index){
+                                vm.reload();
+                                layer.close(loadingIndex);
+                                layer.close(diaindx);
+                            });
+                        }
+                    });
+                },
+                success:function(layero, index){
+                    var iframeWin = layero.find('iframe')[0];
+                    if(typeof iframeWin.contentWindow.init == 'function'){
+                        iframeWin.contentWindow.init({});
+                    }
+                },
+                cancel:function(index,layero){
+                    // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
+                },
+                end: function(index, layero){
+                    // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
+                }
             });
         },
         reload: function () {

@@ -3,6 +3,7 @@ package com.binbinhan.modules.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.binbinhan.common.annotation.DataFilter;
+import com.binbinhan.common.exception.RRException;
 import com.binbinhan.common.utils.Constant;
 import com.binbinhan.common.utils.PageUtils;
 import com.binbinhan.common.utils.Query;
@@ -71,7 +72,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         this.save(user);
 
         //保存用户与角色关系
-        sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
+//        sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
     }
 
     @Override
@@ -86,7 +87,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         this.updateById(user);
 
         //保存用户与角色关系
-        sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
+//        sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
     }
 
 
@@ -96,5 +97,32 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         userEntity.setPassword(newPassword);
         return this.update(userEntity,
                 new QueryWrapper<SysUserEntity>().eq("user_id", userId).eq("password", password));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveImport(Map<String,List<SysUserEntity>>  userMap) {
+        String msg = "";
+        List<SysUserEntity> teacherList = userMap.get("teacherList");
+        List<SysUserEntity> studentList = userMap.get("studentList");
+        for (int i = 0; i < teacherList.size(); i++) {
+            try {
+                this.saveUser(teacherList.get(i));
+            } catch (Exception e) {
+                e.printStackTrace();
+                msg += "教师名册：\n第" + (i + 1) + "条数据保存失败\n";
+            }
+        }
+        for (int i = 0; i < studentList.size(); i++) {
+            try {
+                this.saveUser(studentList.get(i));
+            } catch (Exception e) {
+                e.printStackTrace();
+                msg += "学生名册：\n第" + (i + 1) + "条数据保存失败\n";
+            }
+        }
+        if (!"".equals(msg)){
+            throw new RRException(msg);
+        }
     }
 }

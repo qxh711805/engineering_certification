@@ -16,7 +16,7 @@
             <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;添加用户</a>
             </#if>
             <#if shiro.hasPermission("sys:user:save")>
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;导入用户</a>
+            <a class="btn btn-primary" @click="excelImp"><i class="fa fa-plus"></i>&nbsp;导入用户</a>
             </#if>
             <#if shiro.hasPermission("sys:user:update")>
             <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>

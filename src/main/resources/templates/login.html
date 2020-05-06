@@ -41,11 +41,7 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-
-<!--            <select name="role" id="role" v-model="role" class="form-control" style="appearance: none;">-->
-<!--                <option value="0">请选择登录身份</option>-->
-<!--            </select>-->
-            <select name="public-choice" v-model="role"  style="appearance: none;" class="form-control" @change="getRoleSelected">
+            <select name="public-choice" v-model="role"  style="appearance: none;" class="form-control" >
                 <option :value="coupon.roleId" v-for="coupon in roleList">{{coupon.roleName}}</option>
             </select>
             <span class="glyphicon glyphicon-triangle-bottom form-control-feedback"></span>
@@ -104,7 +100,6 @@
         },
         created:function () {
             $.get(baseURL + "sys/role/login/select", function (r) {
-
                 if (r.code == 0){
                     // for (let role of r.data) {
                     vm.roleList = r.roleList;

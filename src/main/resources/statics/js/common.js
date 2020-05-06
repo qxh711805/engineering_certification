@@ -77,3 +77,13 @@ function getSelectedRows() {
 function isBlank(value) {
     return !value || !/\S/.test(value)
 }
+
+// 提示消息：成功
+window.msgSuccess = function(msg, callback) {
+	parent.layer.msg(msg, {icon: 1, time: 800}, function(index) {
+		parent.layer.close(index);
+		if(typeof(callback) === "function"){
+			callback();
+		}
+	});
+}
