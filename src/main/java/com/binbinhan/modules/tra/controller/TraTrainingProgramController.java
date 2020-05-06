@@ -53,9 +53,17 @@ public class TraTrainingProgramController extends AbstractController {
         return R.ok();
     }
 
-    @RequestMapping(value = "update/{trainingId}",method = RequestMethod.POST)
-    public R update(@PathVariable("trainingId") Long trainingId){
-        traTrainingProgramService.removeById(trainingId);
+    @RequestMapping(value = "update",method = RequestMethod.POST)
+    public R update(@RequestBody TraTrainingProgramEntity traTrainingProgramEntity){
+        System.out.println(traTrainingProgramEntity);
+        traTrainingProgramService.updateById(traTrainingProgramEntity);
         return R.ok();
+    }
+
+    @RequestMapping(value = "info/{trainingId}")
+    public R getById(@PathVariable("trainingId") Long trainingId){
+        TraTrainingProgramEntity traTrainingProgramEntity = traTrainingProgramService.getById(trainingId);
+
+        return R.ok().put("traTrainingProgramEntity",traTrainingProgramEntity);
     }
 }

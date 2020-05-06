@@ -4,7 +4,7 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'ID', name: 'trainingId', index: "trainingId", width: 80, key: true},
-            {label: '培养方案名称', name: 'trainingProgram', width: 75 },
+            {label: '培养方案名称', name: 'trainingProgram', width: 75},
             {label: '版本', name: 'version', width: 70},
             {label: '学校', name: 'schoolName', width: 70},
             {label: '学院', name: 'collegeName', sortable: false, width: 70},
@@ -20,7 +20,7 @@ $(function () {
                         '<a title="修改" class="btn btn-xs btn-primary" onclick="vm.update(' + row.trainingId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
                         '<a title="删除" class="btn btn-xs btn-primary" onclick="vm.del(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>' +
                         '<a title="培养方案详情" class="btn btn-xs btn-primary" onclick="vm.search(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>'
-                       return r;
+                    return r;
                 }
             }
         ],
@@ -74,8 +74,8 @@ var vm = new Vue({
         showList: true,
         title: null,
         roleList: {},
-        TraTrainingProgramEntity : {
-            trainingId:null,
+        TraTrainingProgramEntity: {
+            trainingId: null,
             trainingProgram: null,
             version: null,
             schoolName: null,
@@ -83,8 +83,7 @@ var vm = new Vue({
             department: null,
             major: null,
             majorCode: null,
-            disciplineCategory: null,
-
+            disciplineCategory: null
         },
         file: ""
     },
@@ -95,7 +94,7 @@ var vm = new Vue({
         add: function () {
             vm.showList = false;
             vm.title = "新增";
-            vm.user = {
+            vm.traTrainingProgramEntity = {
                 trainingProgram: null,
                 trainingId: null,
                 version: null,
@@ -104,21 +103,22 @@ var vm = new Vue({
                 department: null,
                 major: null,
                 majorCode: null,
-                disciplineCategory: null};
+                disciplineCategory: null
+            };
         },
 
         importExcel: function () {
             var formData = new FormData();
-            formData.append("file",file);
+            formData.append("file", file);
             // formData.append("service",'App.Passion.UploadFile');
 
             $.ajax({
-                url:'"sys/user/importExcel"', /*接口域名地址*/
-                type:'post',
+                url: '"sys/user/importExcel"', /*接口域名地址*/
+                type: 'post',
                 data: formData,
                 contentType: false,
                 processData: false,
-                success:function(res){
+                success: function (res) {
                     // console.log(res.data);
                     // if(res.data["code"]=="succ"){
                     //     alert('成功');
@@ -130,18 +130,18 @@ var vm = new Vue({
                 }
             })
         },
-        update: function (userId) {
-            if (userId == null) {
-                userId = getSelectedRow();
+        update: function (trainingId) {
+            if (trainingId == null) {
+                trainingId = getSelectedRow();
             }
-            if (userId == null) {
+            if (trainingId == null) {
                 return;
             }
 
             vm.showList = false;
             vm.title = "修改";
 
-            vm.getUser(userId);
+            vm.getUser(trainingId);
         },
         permissions: function () {
             var userId = getSelectedRow();
@@ -154,16 +154,16 @@ var vm = new Vue({
         addRole: function (userId) {
             layer.open({
                 type: 2 //此处以iframe举例
-                ,title: '当你选择该窗体时，即会在最顶端'
-                ,area: ['390px', '260px']
-                ,shade: 0
-                ,maxmin: true
-                ,content:content
-                ,btn: ['确认添加', '返回'] //只是为了演示
-                ,yes: function(){
+                , title: '当你选择该窗体时，即会在最顶端'
+                , area: ['390px', '260px']
+                , shade: 0
+                , maxmin: true
+                , content: content
+                , btn: ['确认添加', '返回'] //只是为了演示
+                , yes: function () {
 
                 }
-                ,btn2: function(){
+                , btn2: function () {
                     layer.closeAll();
                 }
             })
@@ -215,7 +215,7 @@ var vm = new Vue({
             confirm('确定要删除选中的记录？', function () {
                 $.ajax({
                     // type: "POST",
-                    url: baseURL + "tra/tratrainingprogram/delete/"+userIds,
+                    url: baseURL + "tra/tratrainingprogram/delete/" + userIds,
                     // contentType: "application/json",
                     // data: JSON.stringify(userIds),
                     success: function (r) {
@@ -248,15 +248,14 @@ var vm = new Vue({
                 }
             });
         },
-        getUser: function (userId) {
-            $.get(baseURL + "sys/user/info/" + userId, function (r) {
-                vm.user = r.user;
-                vm.user.password = null;
-
+        getUser: function (trainingId) {
+            $.get(baseURL + "tra/tratrainingprogram/info/" + trainingId, function (r) {
+                console.log(r)
+                vm.TraTrainingProgramEntity = r.traTrainingProgramEntity;
             });
         },
         excelImp: function (event) {
-            var diaindx=layer.open({
+            var diaindx = layer.open({
                 type: 2,
                 // offset: ['50px', '100px'], // 弹出位置
                 area: ["500px", "310px"],
@@ -266,15 +265,15 @@ var vm = new Vue({
                 content: "user_excel_import.html",
                 scrollbar: false,
                 btn: ['确定', '关闭'],
-                yes: function(index, layero){
+                yes: function (index, layero) {
                     //loading层
-                    var loadingIndex = layer.load(2, {shade: [0.1,'#fff']});
-                    $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function(r) {
-                        if(r.code<0){
+                    var loadingIndex = layer.load(2, {shade: [0.1, '#fff']});
+                    $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function (r) {
+                        if (r.code < 0) {
                             layer.close(loadingIndex);
                             alert(r.msg);
-                        }else{
-                            msgSuccess('导入成功', function(index){
+                        } else {
+                            msgSuccess('导入成功', function (index) {
                                 vm.reload();
                                 layer.close(loadingIndex);
                                 layer.close(diaindx);
@@ -282,16 +281,16 @@ var vm = new Vue({
                         }
                     });
                 },
-                success:function(layero, index){
+                success: function (layero, index) {
                     var iframeWin = layero.find('iframe')[0];
-                    if(typeof iframeWin.contentWindow.init == 'function'){
+                    if (typeof iframeWin.contentWindow.init == 'function') {
                         iframeWin.contentWindow.init({});
                     }
                 },
-                cancel:function(index,layero){
+                cancel: function (index, layero) {
                     // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
                 },
-                end: function(index, layero){
+                end: function (index, layero) {
                     // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
                 }
             });
