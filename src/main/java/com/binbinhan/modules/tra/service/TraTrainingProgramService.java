@@ -1,7 +1,10 @@
 package com.binbinhan.modules.tra.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.binbinhan.common.utils.PageUtils;
 import com.binbinhan.modules.tra.entity.TraTrainingProgramEntity;
+
+import java.util.Map;
 
 
 /**
@@ -12,5 +15,6 @@ import com.binbinhan.modules.tra.entity.TraTrainingProgramEntity;
  */
 public interface TraTrainingProgramService extends IService<TraTrainingProgramEntity> {
 
+    PageUtils queryPage(Map<String, Object> params);
 }
 
