@@ -67,7 +67,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         //sha256加密
         String salt = RandomStringUtils.randomAlphanumeric(20);
         user.setSalt(salt);
-        user.setPassword(ShiroUtils.sha256(user.getPassword(), user.getSalt()));
+        user.setPassword(ShiroUtils.sha256("123456", user.getSalt()));
         this.save(user);
 
         //保存用户与角色关系

@@ -50,6 +50,11 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleDao, SysUserR
     }
 
     @Override
+    public void addUserAndRole(SysUserRoleEntity sysUserRoleEntity) {
+        this.save(sysUserRoleEntity);
+    }
+
+    @Override
     public int deleteBatch(Long[] roleIds){
         return baseMapper.deleteBatch(roleIds);
     }

@@ -125,7 +125,21 @@ var vm = new Vue({
             window.location.href = baseURL + "sys/permissions/index/" + userId;
         },
         addRole: function (user) {
-
+            $.ajax({
+                type: "POST",
+                url: baseURL + "sys/user/addRole",
+                contentType: "application/json",
+                data: JSON.stringify(user),
+                success: function (r) {
+                    if (r.code == 0) {
+                        alert('操作成功', function () {
+                            vm.reload();
+                        });
+                    } else {
+                        alert(r.msg);
+                    }
+                }
+            });
         },
         delRole: function (user) {
             confirm('确定要删除'+user.name+'的角色？', function () {

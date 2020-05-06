@@ -103,7 +103,7 @@ public class SysUserController extends AbstractController {
         if (user.getUsername() == null || "".equals(user.getUsername() )){
             user.setUsername(user.getJobNumber());
         }
-        ValidatorUtils.validateEntity(user, AddGroup.class);
+//        ValidatorUtils.validateEntity(user, AddGroup.class);
 
         sysUserService.saveUser(user);
 
@@ -146,7 +146,7 @@ public class SysUserController extends AbstractController {
         if (user.getUsername() == null || "".equals(user.getUsername() )){
             user.setUsername(user.getJobNumber());
         }
-        ValidatorUtils.validateEntity(user, UpdateGroup.class);
+//        ValidatorUtils.validateEntity(user, UpdateGroup.class);
 
         sysUserService.update(user);
 
