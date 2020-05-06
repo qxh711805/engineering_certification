@@ -50,15 +50,6 @@
             </select>
             <span class="glyphicon glyphicon-triangle-bottom form-control-feedback"></span>
         </div>
-        <div class="form-group has-feedback">
-            <input type="text" class="form-control" v-model="captcha" @keyup.enter="login" placeholder="验证码">
-            <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-            <img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" @click="refreshCode">
-            &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:;" @click="refreshCode">点击刷新</a>
-        </div>
-
 
         <div class="row">
             <div class="col-xs-8">
@@ -125,11 +116,8 @@
 
         },
         methods: {
-            refreshCode: function () {
-                this.src = "captcha.jpg?t=" + $.now();
-            },
             login: function (event) {
-                var data = "username=" + vm.username + "&password=" + vm.password + "&captcha=" + vm.captcha + "&role=" + vm.role;
+                var data = "username=" + vm.username + "&password=" + vm.password + "&role=" + vm.role;
                 $.ajax({
                     type: "POST",
                     url: "sys/login",
@@ -147,9 +135,6 @@
                     }
                 });
             },
-            getRoleSelected: function () {
-
-            }
         }
     });
 </script>
