@@ -27,10 +27,10 @@ $(function () {
                 label: '操作', name: 'caozuo', width: 120,
                 formatter: function (value, options, row) {
                     let r =
-                        '<a title="修改用户" class="btn btn-xs btn-primary" onclick="vm.update(' + options.userId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
-                        '<a title="删除用户" class="btn btn-xs btn-primary" onclick="vm.del(' + options.userId + ')"><i class="fa fa-trash-o"></i></i></a>' +
-                        '<a title="添加角色" class="btn btn-xs btn-primary"  onclick="vm.addRole(' + options + ')"><i class="fa fa-check"></i></a>' +
-                        '<a title="删除角色" class="btn btn-xs btn-primary" onclick="vm.delRole(' + options + ')"><i class="fa fa-times"></i></a>';
+                        '<a title="修改用户" class="btn btn-xs btn-primary" onclick="vm.update(' + row.userId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
+                        '<a title="删除用户" class="btn btn-xs btn-primary" onclick="vm.del(' + row.userId + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>' +
+                        '<a title="添加角色" class="btn btn-xs btn-primary" onclick="vm.addRole(' + row + ')" style="margin-left: 5px"><i class="fa fa-check"></i></a>' +
+                        '<a title="删除角色" class="btn btn-xs btn-primary" onclick="vm.delRole(' + row + ')" style="margin-left: 5px"><i class="fa fa-times"></i></a>';
                     return r;
                 }
             }
@@ -113,8 +113,6 @@ var vm = new Vue({
             vm.title = "修改";
 
             vm.getUser(userId);
-            //获取角色信息
-            this.getRoleList();
         },
         permissions: function () {
             var userId = getSelectedRow();
@@ -142,7 +140,7 @@ var vm = new Vue({
             });
         },
         delRole: function (user) {
-            confirm('确定要删除'+user.name+'的角色？', function () {
+            confirm('确定要删除' + user.name + '的角色？', function () {
                 $.ajax({
                     type: "POST",
                     url: baseURL + "sys/user/deleteRole",
@@ -211,7 +209,6 @@ var vm = new Vue({
                 vm.user = r.user;
                 vm.user.password = null;
 
-                vm.getDept();
             });
         },
         reload: function () {
