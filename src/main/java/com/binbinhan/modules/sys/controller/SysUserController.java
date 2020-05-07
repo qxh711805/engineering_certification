@@ -142,12 +142,11 @@ public class SysUserController extends AbstractController {
      */
     @SysLog("保存用户")
     @RequestMapping("/addRole")
-    @RequiresPermissions("sys:user:update")
     public R addRole(@RequestBody SysUserEntity user) {
         if (user.getUserId() == null) {
             R.error("用户选择错误！");
         }
-        sysUserService.saveUser(user);
+//        sysUserService.saveUser(user);
         return R.ok();
     }
 

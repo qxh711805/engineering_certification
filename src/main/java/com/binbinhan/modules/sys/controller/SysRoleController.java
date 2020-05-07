@@ -42,6 +42,14 @@ public class SysRoleController extends AbstractController {
         return R.ok().put("page", page);
     }
     /**
+     * 角色列表
+     */
+    @RequestMapping("/all/list")
+    public R allList(@RequestParam Map<String, Object> params){
+        List<SysRoleEntity> list = sysRoleService.list();
+        return R.ok().put("list", list);
+    }
+    /**
      * 角色列表(select组件使用)
      */
     @RequestMapping("/login/select")

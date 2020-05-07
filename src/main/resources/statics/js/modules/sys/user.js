@@ -125,35 +125,22 @@ var vm = new Vue({
         },
         addRole: function (userId) {
             layer.open({
-                type: 2 //此处以iframe举例
-                ,title: '当你选择该窗体时，即会在最顶端'
-                ,area: ['390px', '260px']
-                ,shade: 0
-                ,maxmin: true
-                ,content:content
-                ,btn: ['确认添加', '返回'] //只是为了演示
-                ,yes: function(){
-
+                type: 2,
+                // offset: ['50px', '100px'], // 弹出位置
+                area: ["500px", "310px"],
+                title: "选择上传文件",
+                shade: [0.1, '#000'],
+                maxmin: false, //开启最大化最小化按钮
+                content: "user_addrole.html",
+                scrollbar: false,
+                success: function (layero, index) {
+                    let body = layer.getChildFrame('body', index);
+                    if (userId == null){
+                        userId = getSelectedRows();
+                    }
+                    body.find("#userIds").val(userId);
                 }
-                ,btn2: function(){
-                    layer.closeAll();
-                }
-            })
-            // $.ajax({
-            //     type: "POST",
-            //     url: baseURL + "sys/user/addRole",
-            //     contentType: "application/json",
-            //     data: JSON.stringify(user),
-            //     success: function (r) {
-            //         if (r.code == 0) {
-            //             alert('操作成功', function () {
-            //                 vm.reload();
-            //             });
-            //         } else {
-            //             alert(r.msg);
-            //         }
-            //     }
-            // });
+            });
         },
         delRole: function (user) {
             confirm('确定要删除' + user.name + '的角色？', function () {
@@ -228,7 +215,7 @@ var vm = new Vue({
             });
         },
         excelImp: function (event) {
-            var diaindx=layer.open({
+            var diaindx = layer.open({
                 type: 2,
                 // offset: ['50px', '100px'], // 弹出位置
                 area: ["500px", "310px"],
@@ -238,15 +225,15 @@ var vm = new Vue({
                 content: "user_excel_import.html",
                 scrollbar: false,
                 btn: ['确定', '关闭'],
-                yes: function(index, layero){
+                yes: function (index, layero) {
                     //loading层
-                    var loadingIndex = layer.load(2, {shade: [0.1,'#fff']});
-                    $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function(r) {
-                        if(r.code<0){
+                    var loadingIndex = layer.load(2, {shade: [0.1, '#fff']});
+                    $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function (r) {
+                        if (r.code < 0) {
                             layer.close(loadingIndex);
                             alert(r.msg);
-                        }else{
-                            msgSuccess('导入成功', function(index){
+                        } else {
+                            msgSuccess('导入成功', function (index) {
                                 vm.reload();
                                 layer.close(loadingIndex);
                                 layer.close(diaindx);
@@ -254,16 +241,16 @@ var vm = new Vue({
                         }
                     });
                 },
-                success:function(layero, index){
+                success: function (layero, index) {
                     var iframeWin = layero.find('iframe')[0];
-                    if(typeof iframeWin.contentWindow.init == 'function'){
+                    if (typeof iframeWin.contentWindow.init == 'function') {
                         iframeWin.contentWindow.init({});
                     }
                 },
-                cancel:function(index,layero){
+                cancel: function (index, layero) {
                     // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
                 },
-                end: function(index, layero){
+                end: function (index, layero) {
                     // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
                 }
             });
