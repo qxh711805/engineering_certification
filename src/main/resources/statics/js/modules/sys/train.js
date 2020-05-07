@@ -3,13 +3,13 @@ $(function () {
         url: baseURL + 'tra/tratrainingprogram/list',
         datatype: "json",
         colModel: [
-            {label: 'ID', name: 'trainingId', index: "trainingId", width: 80, key: true},
-            {label: '培养方案名称', name: 'trainingProgram', width: 75},
+            {label: 'ID', name: 'trainingId', index: "trainingId", width: 20, key: true},
+            {label: '培养方案名称', name: 'trainingProgram', width: 90},
             {label: '版本', name: 'version', width: 70},
-            {label: '学校', name: 'schoolName', width: 70},
-            {label: '学院', name: 'collegeName', sortable: false, width: 70},
-            {label: '系所', name: 'department', sortable: false, width: 70},
-            {label: '专业', name: 'major', sortable: false, width: 70},
+            {label: '学校名称', name: 'schoolName', width: 70},
+            {label: '学院名称', name: 'collegeName', sortable: false, width: 70},
+            {label: '系名', name: 'department', sortable: false, width: 70},
+            {label: '专业简称', name: 'major', sortable: false, width: 70},
             {label: '专业代码', name: 'majorCode', sortable: false, width: 70},
             {label: '学科门类', name: 'disciplineCategory', sortable: false, width: 70},
 
@@ -262,7 +262,7 @@ var vm = new Vue({
                 title: "选择上传文件",
                 shade: [0.1, '#000'],
                 maxmin: false, //开启最大化最小化按钮
-                content: "user_excel_import.html",
+                content: "train_excel_import.html",
                 scrollbar: false,
                 btn: ['确定', '关闭'],
                 yes: function (index, layero) {

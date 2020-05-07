@@ -1,5 +1,6 @@
 package com.binbinhan.modules.tra.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -26,39 +27,48 @@ public class TraTrainingProgramEntity implements Serializable {
 	/**
 	 * 学校名称
 	 */
+	@Excel(name = "学校名称")
 	private String schoolName;
 	/**
 	 * 学院名称
 	 */
+	@Excel(name = "学院名称")
 	private String collegeName;
 	/**
 	 * 系名
 	 */
+	@Excel(name = "系名")
 	private String department;
 	/**
-	 * 专业
+	 * 专业简称
 	 */
+	@Excel(name = "专业简称")
 	private String major;
 	/**
 	 * 专业代码
 	 */
+	@Excel(name = "专业代码")
 	private String majorCode;
 	/**
 	 * 学科门类
 	 */
+	@Excel(name = "状态")
 	private String disciplineCategory;
 	/**
 	 * 培养方案
 	 */
+	@Excel(name = "培养方案")
 	private String trainingProgram;
 	/**
 	 * 版本
 	 */
+	@Excel(name = "版本")
 	private String version;
 	/**
 	 * 状态
 	 */
-	private Integer status;
+	@Excel(name = "状态")
+	private String status;
 	/**
 	 * 创建时间
 	 */
