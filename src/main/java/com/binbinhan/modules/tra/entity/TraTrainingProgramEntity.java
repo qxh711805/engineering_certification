@@ -27,23 +27,28 @@ public class TraTrainingProgramEntity implements Serializable {
 	/**
 	 * 学校名称
 	 */
-	@Excel(name = "学校名称")
+	@Excel(name = "学校")
 	private String schoolName;
 	/**
 	 * 学院名称
 	 */
-	@Excel(name = "学院名称")
+	@Excel(name = "学院")
 	private String collegeName;
 	/**
 	 * 系名
 	 */
-	@Excel(name = "系名")
+	@Excel(name = "系")
 	private String department;
+	/**
+	 * 专业
+	 */
+	@Excel(name = "专业")
+	private String major;
 	/**
 	 * 专业简称
 	 */
 	@Excel(name = "专业简称")
-	private String major;
+	private String majorAbbreviation;
 	/**
 	 * 专业代码
 	 */
@@ -52,7 +57,7 @@ public class TraTrainingProgramEntity implements Serializable {
 	/**
 	 * 学科门类
 	 */
-	@Excel(name = "状态")
+	@Excel(name = "学科门类")
 	private String disciplineCategory;
 	/**
 	 * 培养方案

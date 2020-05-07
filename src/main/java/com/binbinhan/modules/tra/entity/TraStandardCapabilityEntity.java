@@ -19,6 +19,10 @@ public class TraStandardCapabilityEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * 认证标准
+	 */
+	private String standard;
+	/**
 	 * 版本
 	 */
 	private String version;

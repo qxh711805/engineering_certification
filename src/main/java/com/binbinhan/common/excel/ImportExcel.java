@@ -7,6 +7,8 @@ package com.binbinhan.common.excel;
 import com.binbinhan.common.utils.Reflections;
 import com.binbinhan.modules.sys.entity.ClassEntity;
 import com.binbinhan.modules.sys.entity.SysUserEntity;
+import com.binbinhan.modules.tra.entity.TraStandardCapabilityEntity;
+import com.binbinhan.modules.tra.entity.TraTrainingProgramEntity;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -618,6 +620,89 @@ public class ImportExcel {
 
             }
             dataList.add(classEntity);
+        }
+        return dataList;
+    }
+
+
+    public List<TraTrainingProgramEntity> getTrainingProgramImportDataList() {
+        List<TraTrainingProgramEntity> dataList = new ArrayList();
+        dataRow:
+        for (int i = this.getDataRowNum(); i <= this.getLastDataRowNum(); i++) {
+            TraTrainingProgramEntity trainingProgramEntity = new TraTrainingProgramEntity();
+            Row row = this.getRow(i);
+            for (int column = 0; column < 4; column++) {
+                String val = this.getCellValue(row, column).toString();
+                    if (column == 0 && org.apache.commons.lang3.StringUtils.isBlank((String) val)) {
+                        continue dataRow;
+                    }
+                    if (column == 0) {
+                        trainingProgramEntity.setSchoolName(val);
+                    }
+                    if (column == 1) {
+                        trainingProgramEntity.setCollegeName(val);
+                    }
+                    if (column == 2) {
+                        trainingProgramEntity.setDepartment(val);
+                    }
+                    if (column == 3) {
+                        trainingProgramEntity.setMajor(val);
+                    }
+                    if (column == 4) {
+                        trainingProgramEntity.setMajorAbbreviation(val);
+                    }
+                    if (column == 5) {
+                        trainingProgramEntity.setMajorCode(val);
+                    }
+                    if (column == 6) {
+                        trainingProgramEntity.setDisciplineCategory(val);
+                    }
+                    if (column == 7) {
+                        trainingProgramEntity.setTrainingProgram(val);
+                    }
+                    if (column == 8) {
+                        trainingProgramEntity.setVersion(val);
+                    }
+                    if (column == 9) {
+                        trainingProgramEntity.setStatus(val);
+                    }
+            }
+            dataList.add(trainingProgramEntity);
+        }
+        return dataList;
+    }
+
+    public List<TraStandardCapabilityEntity> getStandardCapabilityDataList() {
+        List<TraStandardCapabilityEntity> dataList = new ArrayList();
+        dataRow:
+        for (int i = this.getDataRowNum(); i <= this.getLastDataRowNum(); i++) {
+            TraStandardCapabilityEntity standardCapabilityEntity = new TraStandardCapabilityEntity();
+            Row row = this.getRow(i);
+            for (int column = 0; column < 4; column++) {
+                String val = this.getCellValue(row, column).toString();
+                if (column == 0 && org.apache.commons.lang3.StringUtils.isBlank((String) val)) {
+                    continue dataRow;
+                }
+                if (column == 0) {
+                    standardCapabilityEntity.setStandard(val);
+                }
+                if (column == 1) {
+                    standardCapabilityEntity.setVersion(val);
+                }
+                if (column == 2) {
+                    standardCapabilityEntity.setIssuedBy(val);
+                }
+                if (column == 3) {
+                    standardCapabilityEntity.setCapacityNumber(val);
+                }
+                if (column == 4) {
+                    standardCapabilityEntity.setParentNode(val);
+                }
+                if (column == 5) {
+                    standardCapabilityEntity.setCapabilityDescription(val);
+                }
+            }
+            dataList.add(standardCapabilityEntity);
         }
         return dataList;
     }

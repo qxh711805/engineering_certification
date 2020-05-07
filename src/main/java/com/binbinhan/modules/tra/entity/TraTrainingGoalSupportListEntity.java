@@ -14,8 +14,8 @@ import java.util.Date;
  * @date 2020-05-05 00:39:25
  */
 @Data
-@TableName("tra_tratraining_goal_support_list")
-public class TraTratrainingGoalSupportListEntity implements Serializable {
+@TableName("tra_training_goal_support_list")
+public class TraTrainingGoalSupportListEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

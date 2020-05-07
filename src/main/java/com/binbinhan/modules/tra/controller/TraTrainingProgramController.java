@@ -3,6 +3,7 @@ package com.binbinhan.modules.tra.controller;
 import com.binbinhan.common.annotation.SysLog;
 import com.binbinhan.common.controller.AbstractController;
 import com.binbinhan.common.controller.R;
+import com.binbinhan.common.excel.ExcelUtils;
 import com.binbinhan.common.excel.ImportExcel;
 import com.binbinhan.common.utils.PageUtils;
 import com.binbinhan.modules.sys.controller.SysUserController;
@@ -92,12 +93,12 @@ public class TraTrainingProgramController extends AbstractController {
     public void getFile(String n, String p, HttpServletRequest req, HttpServletResponse response) {
         try {
             n = "培养方案导入模板.xls";
-            p = SysUserController.class.getResource("/").toURI().getPath() + "excelTemplate/trainTemplate.xls";
+            p = TraTrainingProgramController.class.getResource("/").toURI().getPath() + "excelTemplate/trainTemplate.xls";
             InputStream in = new FileInputStream(new File(p));
             HSSFWorkbook workbook = new HSSFWorkbook(in);
             HSSFSheet sheet = workbook.getSheetAt(0);
             // 写入文件
-            String tempPath = SysUserController.class.getResource("/").toURI().getPath() + "excelTemplate/trainTemplateTemp.xls";
+            String tempPath = TraTrainingProgramController.class.getResource("/").toURI().getPath() + "excelTemplate/trainTemplateTemp.xls";
             FileOutputStream fileOut = new FileOutputStream(tempPath);
             workbook.write(fileOut);
             File file = new File(tempPath);
@@ -131,11 +132,10 @@ public class TraTrainingProgramController extends AbstractController {
 
     @RequestMapping(value = "fileUpload")
     @ResponseBody
-    public Object importExcel(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
+    public Object importExcel(@RequestParam("file") MultipartFile uFile, HttpServletRequest request) throws Exception {
 
-        System.out.println(file);//用来检查前端是否把文件传过来
         //解析excel，
-        List<TraTrainingProgramEntity> personList = FileUtil.importExcel(file, 0, 1, TraTrainingProgramEntity.class);
+        List<TraTrainingProgramEntity> personList = FileUtil.importExcel(uFile, 0, 1, TraTrainingProgramEntity.class);
 
         System.out.println(personList);
         String error = "";
@@ -146,6 +146,74 @@ public class TraTrainingProgramController extends AbstractController {
         error = "文件上传成功，点击【确定】保存！";
         map.put("error",error);
         return map;
+
+/*
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (uFile.getSize() > 0) {
+            String file_name = "";
+            try {
+                //培养方案
+                ImportExcel trainingProgramImportExcel = new ImportExcel(uFile, 1, 0);
+                List<TraTrainingProgramEntity> trainingProgramImportDataList = trainingProgramImportExcel.getTrainingProgramImportDataList();
+                //标准能力
+                ImportExcel standardCapabilityExcel = new ImportExcel(uFile, 1, 1);
+                standardCapabilityExcel.getStandardCapabilityDataList();
+                //专业能力
+                ImportExcel majorCapabilityImportExcel = new ImportExcel(uFile, 1, 2);
+                //专业培养目标
+                ImportExcel majorCapabilityTargetImportExcel = new ImportExcel(uFile, 1, 3);
+                //培养目标支撑清单
+                ImportExcel trainingGoalSupportListImportExcel = new ImportExcel(uFile, 1, 4);
+                //课程
+                ImportExcel courseInfoImportExcel = new ImportExcel(uFile, 1, 5);
+                //课程能力清单
+                ImportExcel courseCapabilityExcel = new ImportExcel(uFile, 1, 6);
+                String error = "";
+                String e ="";
+//                if (teacherList != null  && teacherList.size()>0) {
+//                    e = analysisImport(teacherList);
+//                    if (StringUtils.isNotBlank(e)) {
+//                        error+="教师名册：\n"+e;
+//                    }
+//                }
+//                if (studentList != null && studentList.size()>0) {
+//                    e = analysisImport(studentList);
+//                    if (StringUtils.isNotBlank(e)) {
+//                        error+="学生名册：\n"+e;
+//                    }
+//                }
+//                e = ExcelUtils.analysisImportFile(teacherImportExcel, "教师名册", "姓名,身份证号,人员工号,工作单位,", 4);
+//                if (StringUtils.isNotBlank(e)) {
+//                    error = e;
+//                }
+//                e = ExcelUtils.analysisImportFile(classImportExcel, "班级", "专业,班级名称,年级,开班时间,培养层次,学制,培养方案,学校,", 8);
+//                if (StringUtils.isNotBlank(e)) {
+//                    error = e;
+//                }
+//                e = ExcelUtils.analysisImportFile(studentImportExcel, "学生名册", "班级名称,学号,学生姓名,学校,", 4);
+//                if (StringUtils.isNotBlank(e)) {
+//                    error = e;
+//                }
+//                if (StringUtils.isNotBlank(error)) {
+//                    map.put("isSave", false);
+//                } else {
+//                    error = "文件上传成功，点击【确定】保存！";
+//                    Map<String,List<SysUserEntity>> userMap = new HashMap<>();
+//                    userMap.put("teacherList",teacherList);
+//                    userMap.put("studentList",studentList);
+//                    request.getSession().setAttribute("deviceInfo_in_session", userMap);
+//                    map.put("isSave", true);
+//                }
+//                map.put("error", error);
+//                map.put("fileName", file_name);
+            } catch (Exception e) {
+                e.printStackTrace();
+                map.put("fileName", file_name);
+                map.put("error", "上传文件错误,请按照要求编辑Excel");
+            }
+
+        }
+        return map;*/
     }
 
 

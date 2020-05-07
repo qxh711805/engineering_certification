@@ -1,6 +1,6 @@
 package com.binbinhan.modules.tra.dao;
 
-import com.binbinhan.modules.tra.entity.TraTratrainingGoalSupportListEntity;
+import com.binbinhan.modules.tra.entity.TraTrainingGoalSupportListEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,6 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2020-05-05 00:39:25
  */
 @Mapper
-public interface TraTratrainingGoalSupportListDao extends BaseMapper<TraTratrainingGoalSupportListEntity> {
+public interface TraTrainingGoalSupportListDao extends BaseMapper<TraTrainingGoalSupportListEntity> {
 	
 }

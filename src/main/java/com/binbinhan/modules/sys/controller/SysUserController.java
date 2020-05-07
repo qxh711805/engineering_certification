@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.binbinhan.common.annotation.SysLog;
 import com.binbinhan.common.controller.AbstractController;
 import com.binbinhan.common.controller.R;
+import com.binbinhan.common.excel.ExcelUtils;
 import com.binbinhan.common.excel.ImportExcel;
 import com.binbinhan.common.utils.PageUtils;
 import com.binbinhan.common.validator.Assert;
@@ -270,15 +271,15 @@ public class SysUserController extends AbstractController {
                         error+="学生名册：\n"+e;
                     }
                 }
-                e = analysisImportFile(teacherImportExcel, "教师名册", "姓名,身份证号,人员工号,工作单位,", 4);
+                e = ExcelUtils.analysisImportFile(teacherImportExcel, "教师名册", "姓名,身份证号,人员工号,工作单位,", 4);
                 if (StringUtils.isNotBlank(e)) {
                     error = e;
                 }
-                e = analysisImportFile(classImportExcel, "班级", "专业,班级名称,年级,开班时间,培养层次,学制,培养方案,学校,", 8);
+                e = ExcelUtils.analysisImportFile(classImportExcel, "班级", "专业,班级名称,年级,开班时间,培养层次,学制,培养方案,学校,", 8);
                 if (StringUtils.isNotBlank(e)) {
                     error = e;
                 }
-                e = analysisImportFile(studentImportExcel, "学生名册", "班级名称,学号,学生姓名,学校,", 4);
+                e = ExcelUtils.analysisImportFile(studentImportExcel, "学生名册", "班级名称,学号,学生姓名,学校,", 4);
                 if (StringUtils.isNotBlank(e)) {
                     error = e;
                 }
@@ -328,30 +329,6 @@ public class SysUserController extends AbstractController {
         request.getSession().removeAttribute(sessionName);
         return R.ok("保存导入的设备成功");
 
-    }
-
-    /**
-     * 上传文件校验
-     * @param importExcel
-     * @param sheetNames
-     * @param headNames
-     * @param rowNum
-     * @return
-     */
-    String analysisImportFile(ImportExcel importExcel, String sheetNames, String headNames, Integer rowNum) {
-        Row headRow = importExcel.getRow(1);
-        String rowName = "";
-        for (int i = 0; i < rowNum; i++) {
-            rowName += importExcel.getCellValue(headRow, i) + ",";
-        }
-        String sheetName = headRow.getSheet().getSheetName();
-        if (!sheetNames.equals(sheetName)) {
-            return "上传文件错误,请按照要求编辑Excel";
-        }
-        if (!headNames.equals(rowName)) {
-            return "请按照模板要求编辑Excel";
-        }
-        return "";
     }
 
     /**

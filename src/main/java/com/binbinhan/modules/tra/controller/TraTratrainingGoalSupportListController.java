@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.binbinhan.modules.tra.service.TraTratrainingGoalSupportListService;
+import com.binbinhan.modules.tra.service.TraTrainingGoalSupportListService;
 
 
 /**
@@ -18,6 +18,6 @@ import com.binbinhan.modules.tra.service.TraTratrainingGoalSupportListService;
 @RequestMapping("tra/tratratraininggoalsupportlist")
 public class TraTratrainingGoalSupportListController extends AbstractController {
     @Autowired
-    private TraTratrainingGoalSupportListService traTratrainingGoalSupportListService;
+    private TraTrainingGoalSupportListService traTratrainingGoalSupportListService;
 
 }

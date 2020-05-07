@@ -10,6 +10,7 @@
         <result property="collegeName" column="college_name"/>
         <result property="department" column="department"/>
         <result property="major" column="major"/>
+        <result property="majorAbbreviation" column="major_abbreviation"/>
         <result property="majorCode" column="major_code"/>
         <result property="disciplineCategory" column="discipline_category"/>
         <result property="trainingProgram" column="training_program"/>
