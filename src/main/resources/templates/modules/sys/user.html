@@ -19,10 +19,14 @@
             <a class="btn btn-primary" @click="excelImp"><i class="fa fa-plus"></i>&nbsp;导入用户</a>
             </#if>
             <#if shiro.hasPermission("sys:user:update")>
-            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-            </#if>
-            <#if shiro.hasPermission("sys:user:delete")>
-            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+<!--            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>-->
+<!--            </#if>-->
+<!--            <#if shiro.hasPermission("sys:user:delete")>-->
+<!--            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除用户</a>-->
+<!--            </#if>-->
+            <#if shiro.hasPermission("sys:user:update")>
+            <a class="btn btn-primary" @click="addRole(null)"><i class="fa fa-pencil-square-o"></i>&nbsp;批量添加角色</a>
+            <a class="btn btn-primary" @click="delRole(null)"><i class="fa fa-trash-o"></i>&nbsp;批量删除角色</a>
             </#if>
 </div>
 <table id="jqGrid"></table>

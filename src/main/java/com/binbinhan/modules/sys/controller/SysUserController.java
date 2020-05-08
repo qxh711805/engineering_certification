@@ -129,11 +129,15 @@ public class SysUserController extends AbstractController {
     @SysLog("保存用户")
     @RequestMapping("/deleteRole")
     @RequiresPermissions("sys:user:update")
-    public R deleteRole(@RequestBody SysUserEntity user) {
-        if (user.getUserId() == null) {
-            R.error("用户选择错误！");
+    public R deleteRole(@RequestParam Map<String,String> params) {
+        try {
+            String userId = params.get("userId");
+            sysUserRoleService.saveOrUpdate(userId,null);
+        }catch (NumberFormatException e){
+            return R.error("请选择角色");
+        }catch (Exception e){
+            return R.error("请检查是否选择有误");
         }
-        sysUserService.saveUser(user);
         return R.ok();
     }
 
@@ -142,11 +146,18 @@ public class SysUserController extends AbstractController {
      */
     @SysLog("保存用户")
     @RequestMapping("/addRole")
-    public R addRole(@RequestBody SysUserEntity user) {
-        if (user.getUserId() == null) {
-            R.error("用户选择错误！");
+    public R addRole(@RequestParam Map<String,String> params) {
+        try {
+            String userIds = params.get("userIds");
+            Long roleId = Long.parseLong(params.get("roleId"));
+            sysUserRoleService.saveOrUpdate(userIds,roleId);
+            System.out.println(userIds);
+            System.out.println(roleId);
+        }catch (NumberFormatException e){
+            return R.error("请选择角色");
+        }catch (Exception e){
+            return R.error("请检查是否选择有误");
         }
-//        sysUserService.saveUser(user);
         return R.ok();
     }
 

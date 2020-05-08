@@ -7,6 +7,9 @@ import com.binbinhan.common.exception.RRException;
 import com.binbinhan.common.utils.Constant;
 import com.binbinhan.common.utils.PageUtils;
 import com.binbinhan.common.utils.Query;
+import com.binbinhan.modules.sys.entity.SysRoleEntity;
+import com.binbinhan.modules.sys.entity.SysUserRoleEntity;
+import com.binbinhan.modules.sys.service.SysRoleService;
 import com.binbinhan.modules.sys.service.SysUserRoleService;
 import com.binbinhan.modules.sys.shiro.ShiroUtils;
 import org.apache.commons.lang.RandomStringUtils;
@@ -23,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 系统用户
@@ -35,27 +39,37 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 
     @Autowired
     private SysUserRoleService sysUserRoleService;
+    @Autowired
+    private SysRoleService sysRoleService;
 
     @Override
-    public List<Long> queryAllMenuId(Long userId,Long roleId) {
-        return baseMapper.queryAllMenuId(userId,roleId);
+    public List<Long> queryAllMenuId(Long userId, Long roleId) {
+        return baseMapper.queryAllMenuId(userId, roleId);
     }
 
     @Override
     @DataFilter(subDept = true, user = false)
     public PageUtils queryPage(Map<String, Object> params) {
-        String username = (String)params.get("username");
-
-        IPage<SysUserEntity> page = this.page(
-                new Query<SysUserEntity>().getPage(params),
-                new QueryWrapper<SysUserEntity>()
-                        .like(StringUtils.isNotBlank(username),"username", username)
-                        .apply(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
-        );
-
-//        for(SysUserEntity sysUserEntity : page.getRecords()){
-//            SysDeptEntity sysDeptEntity = sysDeptService.getById(sysUserEntity.getDeptId());
-//            sysUserEntity.setDeptName(sysDeptEntity.getName());
+        String keyword = (String) params.get("keyword");
+        IPage<SysUserEntity> page = new Query<SysUserEntity>().getPage(params);
+        List<SysUserEntity> list = baseMapper.queryPage(page, ShiroUtils.getUserId(), keyword);
+        page.setRecords(list);
+//        IPage<SysUserEntity> page = this.page(
+//                new Query<SysUserEntity>().getPage(params),
+//                new QueryWrapper<SysUserEntity>()
+//                        .ne("user_id", Constant.SUPER_ADMIN)
+//                        .like(StringUtils.isNotBlank(keyword), "username", keyword)
+//                        .apply(params.get(Constant.SQL_FILTER) != null, (String) params.get(Constant.SQL_FILTER))
+//        );
+//
+//        Map<Long, Long> userRoleMap = sysUserRoleService.list().stream().collect(Collectors.toMap(SysUserRoleEntity::getUserId, SysUserRoleEntity::getRoleId));
+//        Map<Long, SysRoleEntity> sysRoleEntityMap = sysRoleService.list().stream().collect(Collectors.toMap(SysRoleEntity::getRoleId, r -> r));
+//
+//        for (SysUserEntity sysUserEntity : page.getRecords()) {
+//            Long userRoleId = userRoleMap.get(sysUserEntity.getUserId());
+//            if (userRoleId != null) {
+//                sysUserEntity.setRoleName(sysRoleEntityMap.get(userRoleId).getRoleName());
+//            }
 //        }
 
         return new PageUtils(page);
@@ -78,9 +92,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void update(SysUserEntity user) {
-        if(StringUtils.isBlank(user.getPassword())){
+        if (StringUtils.isBlank(user.getPassword())) {
             user.setPassword(null);
-        }else{
+        } else {
             SysUserEntity userEntity = this.getById(user.getUserId());
             user.setPassword(ShiroUtils.sha256(user.getPassword(), userEntity.getSalt()));
         }
@@ -101,7 +115,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveImport(Map<String,List<SysUserEntity>>  userMap) {
+    public void saveImport(Map<String, List<SysUserEntity>> userMap) {
         String msg = "";
         List<SysUserEntity> teacherList = userMap.get("teacherList");
         List<SysUserEntity> studentList = userMap.get("studentList");
@@ -121,7 +135,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
                 msg += "学生名册：\n第" + (i + 1) + "条数据保存失败\n";
             }
         }
-        if (!"".equals(msg)){
+        if (!"".equals(msg)) {
             throw new RRException(msg);
         }
     }

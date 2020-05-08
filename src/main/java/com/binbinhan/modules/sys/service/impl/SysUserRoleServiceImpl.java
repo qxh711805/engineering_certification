@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.binbinhan.modules.sys.dao.SysUserRoleDao;
 import com.binbinhan.modules.sys.entity.SysUserRoleEntity;
 import com.binbinhan.modules.sys.service.SysUserRoleService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,12 +26,12 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleDao, SysUserR
         //先删除用户与角色关系
         this.remove(new QueryWrapper<SysUserRoleEntity>().eq("user_id", userId));
 
-        if(roleIdList == null || roleIdList.size() == 0){
-            return ;
+        if (roleIdList == null || roleIdList.size() == 0) {
+            return;
         }
 
         //保存用户与角色关系
-        for(Long roleId : roleIdList){
+        for (Long roleId : roleIdList) {
             SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
             sysUserRoleEntity.setUserId(userId);
             sysUserRoleEntity.setRoleId(roleId);
@@ -43,7 +44,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleDao, SysUserR
     @Override
     public List<Long> queryRoleIdList(Long userId) {
         List<Long> roleIdList = baseMapper.queryRoleIdList(userId);
-        if (userId== Constant.SUPER_ADMIN){
+        if (userId == Constant.SUPER_ADMIN) {
             roleIdList.add(0l);
         }
         return roleIdList;
@@ -55,7 +56,24 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleDao, SysUserR
     }
 
     @Override
-    public int deleteBatch(Long[] roleIds){
+    @Transactional
+    public void saveOrUpdate(String userIds, Long roleId) {
+        String[] split = userIds.split(",");
+        QueryWrapper<SysUserRoleEntity> wrapper = new QueryWrapper<>();
+        wrapper.in("user_id", split);
+        baseMapper.delete(wrapper);
+        if (roleId != null) {
+            for (String s : split) {
+                SysUserRoleEntity userRoleEntity = new SysUserRoleEntity();
+                userRoleEntity.setUserId(Long.parseLong(s));
+                userRoleEntity.setRoleId(roleId);
+                baseMapper.insert(userRoleEntity);
+            }
+        }
+    }
+
+    @Override
+    public int deleteBatch(Long[] roleIds) {
         return baseMapper.deleteBatch(roleIds);
     }
 

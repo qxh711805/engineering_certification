@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <title>添加角色</title>
     <link rel="stylesheet" href="${request.contextPath}/statics/plugins/layui/css/layui.css">
-    <script src="${request.contextPath}/statics/libs/jquery.min.js"></script>
-    <script src="${request.contextPath}/statics/plugins/layer/layer.js"></script>
+    <#include "/header.html">
     <script src="${request.contextPath}/statics/plugins/layui/layui.js"></script>
-    <script src="${request.contextPath}/statics/plugins/jqgrid/grid.locale-cn.js"></script>
-    <script src="${request.contextPath}/statics/plugins/jqgrid/jquery.jqGrid.min.js"></script>
-    <script src="${request.contextPath}/statics/js/common.js"></script>
 </head>
 <body>
+<div style="padding: 10px 20px;">
+    <button class="layui-btn layui-btn-small" id="add" lay-filter="*" style="margin-left: 0px">确定</button>
+    <button type="reset" class="layui-btn-small layui-btn-primary" id="back" style="margin-left: 100px">返回</button>
+</div>
 <form class="layui-form">
-    <div style="padding: 10px 20px;">
-        <button class="layui-btn layui-btn-small" lay-submit lay-filter="*"style="margin-left: 0px">确定</button>
-        <button type="reset" class="layui-btn-small layui-btn-primary" style="margin-left: 100px">返回</button>
-    </div>
     <div style="padding: 10px 20px">
         <input name="userIds" id="userIds" hidden>
         <span id="title">请选择添加角色</span>
@@ -26,53 +22,5 @@
 </form>
 
 </body>
-<script>
-    layui.use('form', function(){
-        var form = layui.form();
-        form.on('submit', function(data){
-            $.ajax({
-                type: "POST",
-                url: baseURL + "sys/user/addRole",
-                contentType: "application/json",
-                data: JSON.stringify(data.field),
-                success: function (r) {
-                    if (r.code == 0) {
-                        console.log("r",r)
-                        layer.open({
-                            title: '添加角色'
-                            ,content: '添加成功'
-                            ,cancel: function(index, layero){
-                                layer.closeAll();
-                            }
-                        });
-                    } else {
-                        alert(r.msg);
-                    }
-                }
-            });
-        });
-        $.get(baseURL + "sys/role/all/list", function (r) {
-            if (r.code == 0) {
-                let content = '';
-                for (let i = 0; i < r.list.length; i++) {
-                    if (i % 3 == 0) {
-                        content += '<tr>';
-                    }
-                    content += '<td><input type="radio" name="role" value="' + r.list[i].roleId + '" title="' + r.list[i].roleName + '"></td>';
-                    if (i % 3 == 2 || i == r.list.length - 1) {
-                        content += '</tr>';
-                    }
-                }
-                if (r.list.length == 0) {
-                    $("#title").attr("color", "#fd0000")
-                    $("#title").html("请先创建角色！")
-                } else {
-                    console.log(content)
-                    $("#roleTable").html(content);
-                    form.render();
-                }
-            }
-        });
-    });
-</script>
+<script src="${request.contextPath}/statics/js/modules/sys/user_addrole.js?_${.now?long}"></script>
 </html>

@@ -104,6 +104,11 @@ public class SysUserEntity implements Serializable {
 	@TableField(exist=false)
 	private Long loginRoleId;
 	/**
+	 * 用户角色
+	 */
+	@TableField(exist=false)
+	private String rolename;
+	/**
 	 * 创建时间
 	 */
 	private Date createTime;

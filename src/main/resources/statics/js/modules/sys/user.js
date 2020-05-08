@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'sys/user/list',
         datatype: "json",
         colModel: [
-            {label: '用户ID', name: 'userId', index: "user_id", width: 40, key: true},
+            // {label: '用户ID', name: 'userId', index: "user_id", width: 40, key: true},
             // { label: '用户名', name: 'username', width: 75 },
             {label: '用户名', name: 'username', width: 70},
             {label: '姓名', name: 'name', width: 70},
@@ -16,6 +16,7 @@ $(function () {
             {label: '身份证号', name: 'idNumber', sortable: false, width: 70},
             {label: '邮箱', name: 'email', width: 80},
             {label: '手机号', name: 'mobile', width: 90},
+            {label: '用户身份', name: 'rolename', width: 90},
             {
                 label: '状态', name: 'status', width: 50, formatter: function (value, options, row) {
                     return value === 0 ?
@@ -81,7 +82,7 @@ var vm = new Vue({
     el: '#rrapp',
     data: {
         q: {
-            username: null
+            keyword: null
         },
         showList: true,
         title: null,
@@ -124,31 +125,40 @@ var vm = new Vue({
             window.location.href = baseURL + "sys/permissions/index/" + userId;
         },
         addRole: function (userId) {
+            if (userId == null) {
+                userId = getSelectedRows();
+                if (userId == null) {
+                    return;
+                }
+            }
             layer.open({
                 type: 2,
                 // offset: ['50px', '100px'], // 弹出位置
                 area: ["500px", "310px"],
-                title: "选择上传文件",
+                title: "选择要添加的角色",
                 shade: [0.1, '#000'],
                 maxmin: false, //开启最大化最小化按钮
                 content: "user_addrole.html",
                 scrollbar: false,
                 success: function (layero, index) {
                     let body = layer.getChildFrame('body', index);
-                    if (userId == null){
-                        userId = getSelectedRows();
-                    }
-                    body.find("#userIds").val(userId);
+                    console.log(userId.toString())
+                    body.find("#userIds").val(userId.toString());
                 }
             });
         },
-        delRole: function (user) {
-            confirm('确定要删除' + user.name + '的角色？', function () {
+        delRole: function (userId) {
+            if (userId == null) {
+                userId = getSelectedRows();
+                if (userId == null) {
+                    return;
+                }
+            }
+            confirm('确定要删除这些用户角色？', function () {
                 $.ajax({
                     type: "POST",
                     url: baseURL + "sys/user/deleteRole",
-                    contentType: "application/json",
-                    data: JSON.stringify(user),
+                    data: {userId: userId.toString()},
                     success: function (r) {
                         if (r.code == 0) {
                             alert('操作成功', function () {
@@ -165,11 +175,11 @@ var vm = new Vue({
 
             if (userIds == null) {
                 userIds = getSelectedRows();
-            }
-            // var userIds = getSelectedRows();
-
-            if (userIds == null) {
-                return;
+                if (userIds == null) {
+                    return;
+                }
+            }else {
+                userIds = [userIds];
             }
             confirm('确定要删除选中的记录？', function () {
                 $.ajax({
@@ -259,7 +269,7 @@ var vm = new Vue({
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
-                postData: {'username': vm.q.username},
+                postData: {'keyword': vm.q.keyword},
                 page: page
             }).trigger("reloadGrid");
         }

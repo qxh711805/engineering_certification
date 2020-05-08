@@ -28,5 +28,7 @@ public interface SysUserRoleService extends IService<SysUserRoleEntity> {
 
 
     void addUserAndRole(SysUserRoleEntity sysUserRoleEntity);
+
+    void saveOrUpdate(String userIds, Long roleId);
 }
 
