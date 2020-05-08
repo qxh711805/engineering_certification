@@ -1,7 +1,10 @@
 package com.binbinhan.modules.tra.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.binbinhan.common.utils.PageUtils;
 import com.binbinhan.modules.tra.entity.TraMajorCapabilityEntity;
+
+import java.util.Map;
 
 
 /**
@@ -12,5 +15,6 @@ import com.binbinhan.modules.tra.entity.TraMajorCapabilityEntity;
  */
 public interface TraMajorCapabilityService extends IService<TraMajorCapabilityEntity> {
 
+    PageUtils queryPage(Map<String, Object> params);
 }
 

@@ -1,25 +1,19 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'tra/tratrainingprogram/list',
+        url: baseURL + 'tra/tramajorcapability/list',
         datatype: "json",
         colModel: [
             {label: 'ID', name: 'trainingId', index: "trainingId", width: 20, key: true},
-            {label: '培养方案名称', name: 'trainingProgram', width: 90},
-            {label: '版本', name: 'version', width: 70},
-            {label: '学校名称', name: 'schoolName', width: 70},
-            {label: '学院名称', name: 'collegeName', sortable: false, width: 70},
-            {label: '系名', name: 'department', sortable: false, width: 70},
-            {label: '专业简称', name: 'major', sortable: false, width: 70},
-            {label: '专业代码', name: 'majorCode', sortable: false, width: 70},
-            {label: '学科门类', name: 'disciplineCategory', sortable: false, width: 70},
-
+            {label: '标准能力编号', name: 'standardCapacityNumber', width: 90},
+            {label: '支撑权重', name: 'supportWeight', width: 70},
+            {label: '能力编号', name: 'capacityNumber', width: 70},
+            {label: '父节点', name: 'parentNode', sortable: false, width: 70},
             {
                 label: '操作', name: 'caozuo', width: 120,
                 formatter: function (value, options, row) {
                     let r =
                         '<a title="修改" class="btn btn-xs btn-primary" onclick="vm.update(' + row.trainingId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
-                        '<a title="删除" class="btn btn-xs btn-primary" onclick="vm.del(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>' +
-                        '<a title="培养方案详情" class="btn btn-xs btn-primary" onclick="vm.trainInfo(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-pencil-square-o"></i></i></a>'
+                        '<a title="删除" class="btn btn-xs btn-primary" onclick="vm.del(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>'
                     return r;
                 }
             }
@@ -254,7 +248,6 @@ var vm = new Vue({
                 vm.TraTrainingProgramEntity = r.traTrainingProgramEntity;
             });
         },
-
         excelImp: function (event) {
             var diaindx = layer.open({
                 type: 2,
@@ -263,60 +256,14 @@ var vm = new Vue({
                 title: "选择上传文件",
                 shade: [0.1, '#000'],
                 maxmin: false, //开启最大化最小化按钮
-                content: "train_excel_import.html",
-                scrollbar: false,
-                btn: ['确定', '关闭'],
-                yes: function (index, layero) {
-                    //loading层
-                    var loadingIndex = layer.load(2, {shade: [0.1, '#fff']});
-                    msgSuccess('导入成功', function (index) {
-                        vm.reload();
-                        layer.close(loadingIndex);
-                        layer.close(diaindx);
-                    });
-                    vm.reload();
-                    // $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function (r) {
-                    //     if (r.code < 0) {
-                    //         layer.close(loadingIndex);
-                    //         alert(r.msg);
-                    //     } else {
-                    //         msgSuccess('导入成功', function (index) {
-                    //             vm.reload();
-                    //             layer.close(loadingIndex);
-                    //             layer.close(diaindx);
-                    //         });
-                    //     }
-                    // });
-                },
-                success: function (layero, index) {
-                    var iframeWin = layero.find('iframe')[0];
-                    if (typeof iframeWin.contentWindow.init == 'function') {
-                        iframeWin.contentWindow.init({});
-                    }
-                },
-                cancel: function (index, layero) {
-                    // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
-                },
-                end: function (index, layero) {
-                    // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
-                }
-            });
-        },
-        trainInfo: function (id) {
-            var diaindx = layer.open({
-                type: 2,
-                // offset: ['50px', '100px'], // 弹出位置
-                area: ["900px", "400px"],
-                title: "详情信息",
-                shade: [0.1, '#000'],
-                maxmin: true, //开启最大化最小化按钮
-                content: "train_info.html?"+id,
+                content: "train_info_excel_import.html",
                 scrollbar: false,
                 btn: ['确定', '关闭'],
                 yes: function (index, layero) {
                     //loading层
                     var loadingIndex = layer.load(2, {shade: [0.1, '#fff']});
 
+                    vm.reload()
                     // $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function (r) {
                     //     if (r.code < 0) {
                     //         layer.close(loadingIndex);

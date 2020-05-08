@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理员列表</title>
+    <#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <div class="form-group col-sm-2">
+                <input type="hidden" class="form-control" v-model="q.id">
+            </div>
+<!--            <a class="btn btn-default" @click="query">查询</a>-->
+            <#if shiro.hasPermission("sys:user:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;添加培养方案</a>
+            </#if>
+            <#if shiro.hasPermission("sys:user:save")>
+            <a class="btn btn-primary" @click="excelImp"><i class="fa fa-plus"></i>&nbsp;导入培养方案</a>
+            </#if>
+<!--            <#if shiro.hasPermission("sys:user:update")>-->
+<!--            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>-->
+<!--            </#if>-->
+<!--            <#if shiro.hasPermission("sys:user:delete")>-->
+<!--            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>-->
+<!--            </#if>-->
+</div>
+<table id="jqGrid"></table>
+<div id="jqGridPager"></div>
+</div>
+
+<div v-show="!showList" class="panel panel-default">
+    <div class="panel-heading">{{title}}</div>
+    <form class="form-horizontal" >
+        <table style="width: 800px">
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">培养方案名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.trainingProgram" placeholder="培养方案名称"/>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">版本</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.version" placeholder="版本"/>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">学校</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.schoolName" placeholder="学校"/>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">学院名称</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.collegeName" placeholder="学院名称"/>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">系所</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.department" placeholder="系所"/>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">专业</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.major" placeholder="专业"/>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">专业代码</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.majorCode" placeholder="专业代码"/>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">学科门类</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.disciplineCategory" placeholder="学科门类"/>
+                        </div>
+                    </div>
+                </td>
+<!--                <td>-->
+<!--                    <div class="form-group">-->
+<!--                        <div class="col-sm-2 control-label">手&nbsp;机&nbsp;号</div>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.mobile" placeholder="手机号"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </td>-->
+            </tr>
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div class="form-group">-->
+<!--                        <div class="col-sm-2 control-label">状&emsp;&emsp;态</div>-->
+<!--                        <label class="radio-inline">-->
+<!--                            <input type="radio" name="status" value="0" v-model="user.status"/> 禁用-->
+<!--                        </label>-->
+<!--                        <label class="radio-inline">-->
+<!--                            <input type="radio" name="status" value="1" v-model="user.status"/> 正常-->
+<!--                        </label>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <div class="form-group">-->
+<!--                        <div class="col-sm-2 control-label">邮&emsp;&emsp;箱</div>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <input type="text" class="form-control" v-model="user.email" placeholder="邮箱"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+            <tr>
+                <td colspan="2">
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label"></div>
+                        <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                        &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/sys/train_info.js?_${.now?long}"></script>
+</body>
+</html>
