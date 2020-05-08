@@ -3,17 +3,18 @@ $(function () {
         url: baseURL + 'tra/tramajorcapability/list',
         datatype: "json",
         colModel: [
-            {label: 'ID', name: 'trainingId', index: "trainingId", width: 20, key: true},
+            {label: '培养方案编号ID', name: 'trainingId', index: "trainingId", width: 40, key: true},
             {label: '标准能力编号', name: 'standardCapacityNumber', width: 90},
             {label: '支撑权重', name: 'supportWeight', width: 70},
             {label: '能力编号', name: 'capacityNumber', width: 70},
             {label: '父节点', name: 'parentNode', sortable: false, width: 70},
+            {label: '能力描述', name: 'capabilityDescription', sortable: false, width: 70},
             {
                 label: '操作', name: 'caozuo', width: 120,
                 formatter: function (value, options, row) {
                     let r =
                         '<a title="修改" class="btn btn-xs btn-primary" onclick="vm.update(' + row.trainingId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
-                        '<a title="删除" class="btn btn-xs btn-primary" onclick="vm.del(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>'
+                        '<a title="删除" class="btn btn-xs btn-primary" onclick="vm.del(' + row.standardCapacityNumber + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>'
                     return r;
                 }
             }
@@ -68,16 +69,13 @@ var vm = new Vue({
         showList: true,
         title: null,
         roleList: {},
-        TraTrainingProgramEntity: {
+        traMajorCapabilityEntity: {
             trainingId: null,
-            trainingProgram: null,
-            version: null,
-            schoolName: null,
-            collegeName: null,
-            department: null,
-            major: null,
-            majorCode: null,
-            disciplineCategory: null
+            standardCapacityNumber: null,
+            supportWeight: null,
+            capacityNumber: null,
+            parentNode: null,
+            capabilityDescription: null,
         },
         file: ""
     },
@@ -88,17 +86,14 @@ var vm = new Vue({
         add: function () {
             vm.showList = false;
             vm.title = "新增";
-            vm.traTrainingProgramEntity = {
-                trainingProgram: null,
-                trainingId: null,
-                version: null,
-                schoolName: null,
-                collegeName: null,
-                department: null,
-                major: null,
-                majorCode: null,
-                disciplineCategory: null
-            };
+            vm.traMajorCapabilityEntity= {
+                    trainingId: null,
+                    standardCapacityNumber: null,
+                    supportWeight: null,
+                    capacityNumber: null,
+                    parentNode: null,
+                    capabilityDescription: null,
+            }
         },
 
         importExcel: function () {
@@ -225,12 +220,20 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
-            var url = vm.TraTrainingProgramEntity.trainingId == null ? "tra/tratrainingprogram/save" : "tra/tratrainingprogram/update";
+            vm.traMajorCapabilityEntity= {
+                trainingId: null,
+                standardCapacityNumber: null,
+                supportWeight: null,
+                capacityNumber: null,
+                parentNode: null,
+                capabilityDescription: null,
+            }
+            var url = vm.traMajorCapabilityEntity.trainingId == null ? "tra/tramajorcapability/save" : "tra/tramajorcapability/update";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
                 contentType: "application/json",
-                data: JSON.stringify(vm.TraTrainingProgramEntity),
+                data: JSON.stringify(vm.traMajorCapabilityEntity),
                 success: function (r) {
                     if (r.code === 0) {
                         alert('操作成功', function () {
@@ -243,9 +246,9 @@ var vm = new Vue({
             });
         },
         getUser: function (trainingId) {
-            $.get(baseURL + "tra/tratrainingprogram/info/" + trainingId, function (r) {
+            $.get(baseURL + "tra/tramajorcapability/info/" + trainingId, function (r) {
                 console.log(r)
-                vm.TraTrainingProgramEntity = r.traTrainingProgramEntity;
+                vm.traMajorCapabilityEntity = r.traMajorCapabilityEntity;
             });
         },
         excelImp: function (event) {

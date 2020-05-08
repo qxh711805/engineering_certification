@@ -36,9 +36,9 @@
             <tr>
                 <td>
                     <div class="form-group">
-                        <div class="col-sm-2 control-label">培养方案名称</div>
+                        <div class="col-sm-2 control-label">ID</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.trainingProgram" placeholder="培养方案名称"/>
+                            <input type="text" class="form-control" v-model="traMajorCapabilityEntity.trainingId" placeholder="" disabled/>
                         </div>
                     </div>
                 </td>
@@ -46,17 +46,17 @@
             <tr>
                 <td>
                     <div class="form-group">
-                        <div class="col-sm-2 control-label">版本</div>
+                        <div class="col-sm-2 control-label">标准能力编号</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.version" placeholder="版本"/>
+                            <input type="text" class="form-control" v-model="traMajorCapabilityEntity.standardCapacityNumber" placeholder=""/>
                         </div>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <div class="col-sm-2 control-label">学校</div>
+                        <div class="col-sm-2 control-label">支撑权重</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.schoolName" placeholder="学校"/>
+                            <input type="text" class="form-control" v-model="traMajorCapabilityEntity.supportWeight" placeholder=""/>
                         </div>
                     </div>
                 </td>
@@ -64,17 +64,17 @@
             <tr>
                 <td>
                     <div class="form-group">
-                        <div class="col-sm-2 control-label">学院名称</div>
+                        <div class="col-sm-2 control-label">能力编号</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.collegeName" placeholder="学院名称"/>
+                            <input type="text" class="form-control" v-model="traMajorCapabilityEntity.capacityNumber" placeholder=""/>
                         </div>
                     </div>
                 </td>
                 <td>
                     <div class="form-group">
-                        <div class="col-sm-2 control-label">系所</div>
+                        <div class="col-sm-2 control-label">父节点</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.department" placeholder="系所"/>
+                            <input type="text" class="form-control" v-model="traMajorCapabilityEntity.parentNode" placeholder=""/>
                         </div>
                     </div>
                 </td>
@@ -82,30 +82,30 @@
             <tr>
                 <td>
                     <div class="form-group">
-                        <div class="col-sm-2 control-label">专业</div>
+                        <div class="col-sm-2 control-label">能力描述</div>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.major" placeholder="专业"/>
+                            <input type="text" class="form-control" v-model="traMajorCapabilityEntity.capabilityDescription" placeholder=""/>
                         </div>
                     </div>
                 </td>
-                <td>
-                    <div class="form-group">
-                        <div class="col-sm-2 control-label">专业代码</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.majorCode" placeholder="专业代码"/>
-                        </div>
-                    </div>
-                </td>
+<!--                <td>-->
+<!--                    <div class="form-group">-->
+<!--                        <div class="col-sm-2 control-label">专业代码</div>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.majorCode" placeholder="专业代码"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </td>-->
             </tr>
-            <tr>
-                <td>
-                    <div class="form-group">
-                        <div class="col-sm-2 control-label">学科门类</div>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.disciplineCategory" placeholder="学科门类"/>
-                        </div>
-                    </div>
-                </td>
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div class="form-group">-->
+<!--                        <div class="col-sm-2 control-label">学科门类</div>-->
+<!--                        <div class="col-sm-10">-->
+<!--                            <input type="text" class="form-control" v-model="TraTrainingProgramEntity.disciplineCategory" placeholder="学科门类"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </td>-->
 <!--                <td>-->
 <!--                    <div class="form-group">-->
 <!--                        <div class="col-sm-2 control-label">手&nbsp;机&nbsp;号</div>-->

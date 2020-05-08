@@ -4,17 +4,16 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.binbinhan.common.controller.AbstractController;
 import com.binbinhan.common.controller.R;
+import com.binbinhan.common.excel.ImportExcel;
 import com.binbinhan.common.utils.PageUtils;
+import com.binbinhan.modules.sys.entity.SysUserEntity;
 import com.binbinhan.modules.tra.entity.FileUtil;
 import com.binbinhan.modules.tra.entity.TraMajorCapabilityEntity;
 import com.binbinhan.modules.tra.entity.TraTrainingProgramEntity;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.binbinhan.modules.tra.service.TraMajorCapabilityService;
 import org.springframework.web.multipart.MultipartFile;
@@ -88,7 +87,11 @@ public class TraMajorCapabilityController extends AbstractController {
         }
 
     }
-
+    @RequestMapping(value = "delete/{trainingId}")
+    public R delete(@PathVariable("trainingId") Long trainingId) {
+        traMajorCapabilityService.removeById(trainingId);
+        return R.ok();
+    }
     /**
      * Excel文件上传
      *
@@ -98,12 +101,14 @@ public class TraMajorCapabilityController extends AbstractController {
     @RequestMapping(value = "fileUpload")
     @ResponseBody
     public Object importExcel(@RequestParam("file") MultipartFile uFile, HttpServletRequest request) throws Exception {
+
         //解析excel，
-        List<TraMajorCapabilityEntity> personList = FileUtil.importExcel(uFile, 1, 2, TraMajorCapabilityEntity.class);
+        List<TraMajorCapabilityEntity> personList = FileUtil.importExcel(uFile, 0,1, TraMajorCapabilityEntity.class);
         System.out.println(personList);
         ImportParams params = new ImportParams();
         params.setHeadRows(1);
-        params.setTitleRows(1);
+        params.setTitleRows(2);
+        params.setStartRows(0);
         List<TraMajorCapabilityEntity> traMajorCapabilityEntitys= ExcelImportUtil.importExcel(uFile.getInputStream(), TraMajorCapabilityEntity.class, params);
         System.out.println(traMajorCapabilityEntitys);
         String error = "";
@@ -114,5 +119,31 @@ public class TraMajorCapabilityController extends AbstractController {
         error = "文件上传成功，点击【确定】保存！";
         map.put("error", error);
         return map;
+    }
+
+    @RequestMapping("/save")
+//    @RequiresPermissions("sys:user:save")
+    public R save(@RequestBody TraMajorCapabilityEntity traTrainingProgramEntity) {
+//        if (user.getUsername() == null || "".equals(user.getUsername())) {
+//            user.setUsername(user.getJobNumber());
+//        }
+//        ValidatorUtils.validateEntity(user, AddGroup.class);
+        traTrainingProgramEntity.setTrainingId(1L);
+        traMajorCapabilityService.save(traTrainingProgramEntity);
+        return R.ok();
+    }
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public R update(@RequestBody TraMajorCapabilityEntity traTrainingProgramEntity) {
+        System.out.println(traTrainingProgramEntity);
+        traMajorCapabilityService.updateById(traTrainingProgramEntity);
+        return R.ok();
+    }
+
+    @RequestMapping(value = "info/{trainingId}")
+    public R getById(@PathVariable("trainingId") Long trainingId) {
+        TraMajorCapabilityEntity  traMajorCapabilityEntity= traMajorCapabilityService.getById(trainingId);
+
+        return R.ok().put("traMajorCapabilityEntity", traMajorCapabilityEntity);
     }
 }
