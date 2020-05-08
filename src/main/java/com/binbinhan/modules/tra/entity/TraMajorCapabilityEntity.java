@@ -22,6 +22,8 @@ public class TraMajorCapabilityEntity implements Serializable {
 	 * 能力编号（防止出现1.2.1这类编号所以使用varchar）
 	 */
 	@TableId
+	private Integer id;
+
 	@Excel(name = "能力编号")
 	private String capacityNumber;
 	/**

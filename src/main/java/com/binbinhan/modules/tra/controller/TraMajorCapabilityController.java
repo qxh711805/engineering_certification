@@ -89,6 +89,9 @@ public class TraMajorCapabilityController extends AbstractController {
     }
     @RequestMapping(value = "delete/{trainingId}")
     public R delete(@PathVariable("trainingId") Long trainingId) {
+
+        System.out.println("---save-----"+trainingId);
+
         traMajorCapabilityService.removeById(trainingId);
         return R.ok();
     }
@@ -103,7 +106,7 @@ public class TraMajorCapabilityController extends AbstractController {
     public Object importExcel(@RequestParam("file") MultipartFile uFile, HttpServletRequest request) throws Exception {
 
         //解析excel，
-        List<TraMajorCapabilityEntity> personList = FileUtil.importExcel(uFile, 0,1, TraMajorCapabilityEntity.class);
+        List<TraMajorCapabilityEntity> personList = FileUtil.importExcel(uFile, 1,2, TraMajorCapabilityEntity.class);
         System.out.println(personList);
         ImportParams params = new ImportParams();
         params.setHeadRows(1);
@@ -123,13 +126,15 @@ public class TraMajorCapabilityController extends AbstractController {
 
     @RequestMapping("/save")
 //    @RequiresPermissions("sys:user:save")
-    public R save(@RequestBody TraMajorCapabilityEntity traTrainingProgramEntity) {
+    public R save(@RequestBody TraMajorCapabilityEntity traMajorCapabilityEntity) {
 //        if (user.getUsername() == null || "".equals(user.getUsername())) {
 //            user.setUsername(user.getJobNumber());
 //        }
 //        ValidatorUtils.validateEntity(user, AddGroup.class);
-        traTrainingProgramEntity.setTrainingId(1L);
-        traMajorCapabilityService.save(traTrainingProgramEntity);
+        System.out.println("---save-----"+traMajorCapabilityEntity);
+        traMajorCapabilityEntity.setTrainingId(1L);
+
+        traMajorCapabilityService.save(traMajorCapabilityEntity);
         return R.ok();
     }
 
@@ -140,9 +145,9 @@ public class TraMajorCapabilityController extends AbstractController {
         return R.ok();
     }
 
-    @RequestMapping(value = "info/{trainingId}")
-    public R getById(@PathVariable("trainingId") Long trainingId) {
-        TraMajorCapabilityEntity  traMajorCapabilityEntity= traMajorCapabilityService.getById(trainingId);
+    @RequestMapping(value = "info/{id}")
+    public R getById(@PathVariable("id") Long id) {
+        TraMajorCapabilityEntity  traMajorCapabilityEntity= traMajorCapabilityService.getById(id);
 
         return R.ok().put("traMajorCapabilityEntity", traMajorCapabilityEntity);
     }

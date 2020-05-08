@@ -28,7 +28,7 @@ public class TraMajorCapabilityServiceImpl extends ServiceImpl<TraMajorCapabilit
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        String id = (String)params.get("id");
+        String id = (String)params.get("trainingId");
         System.out.println("--------------------"+id);
         id="1";
         IPage<TraMajorCapabilityEntity> page = this.page(

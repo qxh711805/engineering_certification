@@ -3,6 +3,7 @@ $(function () {
         url: baseURL + 'tra/tramajorcapability/list',
         datatype: "json",
         colModel: [
+            {label: 'ID', name: 'id', index: "id", width: 40, key: true},
             {label: '培养方案编号ID', name: 'trainingId', index: "trainingId", width: 40, key: true},
             {label: '标准能力编号', name: 'standardCapacityNumber', width: 90},
             {label: '支撑权重', name: 'supportWeight', width: 70},
@@ -13,8 +14,8 @@ $(function () {
                 label: '操作', name: 'caozuo', width: 120,
                 formatter: function (value, options, row) {
                     let r =
-                        '<a title="修改" class="btn btn-xs btn-primary" onclick="vm.update(' + row.trainingId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
-                        '<a title="删除" class="btn btn-xs btn-primary" onclick="vm.del(' + row.standardCapacityNumber + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>'
+                        '<a title="修改" class="btn btn-xs btn-primary" onclick="vm.update(' + row.id + ')"><i class="fa fa-pencil-square-o"></i></a>' +
+                        '<a title="删除" class="btn btn-xs btn-primary" onclick="vm.del(' + row.id + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>'
                     return r;
                 }
             }
@@ -63,8 +64,9 @@ var ztree;
 var vm = new Vue({
     el: '#rrapp',
     data: {
+
         q: {
-            id: 1
+            trainingId: ""
         },
         showList: true,
         title: null,
@@ -140,57 +142,7 @@ var vm = new Vue({
 
             window.location.href = baseURL + "sys/permissions/index/" + userId;
         },
-        addRole: function (userId) {
-            layer.open({
-                type: 2 //此处以iframe举例
-                , title: '当你选择该窗体时，即会在最顶端'
-                , area: ['390px', '260px']
-                , shade: 0
-                , maxmin: true
-                , content: content
-                , btn: ['确认添加', '返回'] //只是为了演示
-                , yes: function () {
 
-                }
-                , btn2: function () {
-                    layer.closeAll();
-                }
-            })
-            // $.ajax({
-            //     type: "POST",
-            //     url: baseURL + "sys/user/addRole",
-            //     contentType: "application/json",
-            //     data: JSON.stringify(user),
-            //     success: function (r) {
-            //         if (r.code == 0) {
-            //             alert('操作成功', function () {
-            //                 vm.reload();
-            //             });
-            //         } else {
-            //             alert(r.msg);
-            //         }
-            //     }
-            // });
-        },
-        delRole: function (user) {
-            confirm('确定要删除' + user.name + '的角色？', function () {
-                $.ajax({
-                    type: "POST",
-                    url: baseURL + "sys/user/deleteRole",
-                    contentType: "application/json",
-                    data: JSON.stringify(user),
-                    success: function (r) {
-                        if (r.code == 0) {
-                            alert('操作成功', function () {
-                                vm.reload();
-                            });
-                        } else {
-                            alert(r.msg);
-                        }
-                    }
-                });
-            });
-        },
         del: function (userIds) {
 
             if (userIds == null) {
@@ -204,7 +156,7 @@ var vm = new Vue({
             confirm('确定要删除选中的记录？', function () {
                 $.ajax({
                     // type: "POST",
-                    url: baseURL + "tra/tratrainingprogram/delete/" + userIds,
+                    url: baseURL + "tra/tramajorcapability/delete/" + userIds,
                     // contentType: "application/json",
                     // data: JSON.stringify(userIds),
                     success: function (r) {
@@ -220,14 +172,6 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
-            vm.traMajorCapabilityEntity= {
-                trainingId: null,
-                standardCapacityNumber: null,
-                supportWeight: null,
-                capacityNumber: null,
-                parentNode: null,
-                capabilityDescription: null,
-            }
             var url = vm.traMajorCapabilityEntity.trainingId == null ? "tra/tramajorcapability/save" : "tra/tramajorcapability/update";
             $.ajax({
                 type: "POST",
@@ -298,7 +242,7 @@ var vm = new Vue({
             vm.showList = true;
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
-                postData: {'id': vm.q.id},
+                postData: {'trainingId': vm.q.trainingId},
                 page: page
             }).trigger("reloadGrid");
         }
