@@ -309,50 +309,18 @@ var vm = new Vue({
                 area: ["900px", "400px"],
                 title: "详情信息",
                 shade: [0.1, '#000'],
-                maxmin: true, //开启最大化最小化按钮
+                // maxmin: true, //开启最大化最小化按钮
                 content: "train_info.html?",
                 scrollbar: false,
-                btn: ['确定', '关闭'],
                 success: function (layero, index) {
                     let body = layer.getChildFrame('body', index);
                     if (trainingId == null){
                         trainingId = getSelectedRows();
                     }
                     body.find("#trainingId").val(trainingId);
-                },
-
-
-
-                // yes: function (index, layero) {
-                //     //loading层
-                //     var loadingIndex = layer.load(2, {shade: [0.1, '#fff']});
-                //
-                //     // $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function (r) {
-                //     //     if (r.code < 0) {
-                //     //         layer.close(loadingIndex);
-                //     //         alert(r.msg);
-                //     //     } else {
-                //     //         msgSuccess('导入成功', function (index) {
-                //     //             vm.reload();
-                //     //             layer.close(loadingIndex);
-                //     //             layer.close(diaindx);
-                //     //         });
-                //     //     }
-                //     // });
-                // },
-                // success: function (layero, index) {
-                //     var iframeWin = layero.find('iframe')[0];
-                //     if (typeof iframeWin.contentWindow.init == 'function') {
-                //         iframeWin.contentWindow.init({});
-                //     }
-                // },
-                cancel: function (index, layero) {
-                    // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
-                },
-                end: function (index, layero) {
-                    // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
                 }
             });
+            layer.full(diaindx);
         },
         reload: function () {
             vm.showList = true;

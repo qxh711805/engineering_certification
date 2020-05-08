@@ -19,6 +19,11 @@ public class TraStandardCapabilityEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * 标准能力
+	 */
+	@TableId
+	private Long id;
+	/**
 	 * 认证标准
 	 */
 	private String standard;
@@ -33,7 +38,6 @@ public class TraStandardCapabilityEntity implements Serializable {
 	/**
 	 * 能力编号（防止出现1.2.1这类编号所以使用varchar）
 	 */
-	@TableId
 	private String capacityNumber;
 	/**
 	 * 父节点，对应能力编号
