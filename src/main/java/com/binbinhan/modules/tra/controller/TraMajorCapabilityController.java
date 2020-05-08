@@ -4,6 +4,7 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.binbinhan.common.controller.AbstractController;
 import com.binbinhan.common.controller.R;
+import com.binbinhan.common.excel.EasyExcelUtils;
 import com.binbinhan.common.excel.ImportExcel;
 import com.binbinhan.common.utils.PageUtils;
 import com.binbinhan.modules.sys.entity.SysUserEntity;
@@ -106,14 +107,15 @@ public class TraMajorCapabilityController extends AbstractController {
     public Object importExcel(@RequestParam("file") MultipartFile uFile, HttpServletRequest request) throws Exception {
 
         //解析excel，
-        List<TraMajorCapabilityEntity> personList = FileUtil.importExcel(uFile, 1,2, TraMajorCapabilityEntity.class);
-        System.out.println(personList);
-        ImportParams params = new ImportParams();
-        params.setHeadRows(1);
-        params.setTitleRows(2);
-        params.setStartRows(0);
-        List<TraMajorCapabilityEntity> traMajorCapabilityEntitys= ExcelImportUtil.importExcel(uFile.getInputStream(), TraMajorCapabilityEntity.class, params);
-        System.out.println(traMajorCapabilityEntitys);
+        List<TraMajorCapabilityEntity> personList = EasyExcelUtils.importExcel(uFile, 0,2, 2,false,TraMajorCapabilityEntity.class);
+//        List<TraMajorCapabilityEntity> personList = FileUtil.importExcel(uFile, 1,2, TraMajorCapabilityEntity.class);
+//        System.out.println(personList);
+//        ImportParams params = new ImportParams();
+//        params.setHeadRows(2);
+//        params.setTitleRows(0);
+//        params.setStartRows(0);
+//        List<TraMajorCapabilityEntity> traMajorCapabilityEntitys= ExcelImportUtil.importExcel(uFile.getInputStream(), TraMajorCapabilityEntity.class, params);
+//        System.out.println(traMajorCapabilityEntitys);
         String error = "";
         for (TraMajorCapabilityEntity traMajorCapabilityEntity : personList) {
             traMajorCapabilityService.save(traMajorCapabilityEntity);

@@ -4,7 +4,7 @@ $.jgrid.defaults.responsive = true;
 $.jgrid.defaults.styleUI = 'Bootstrap';
 
 // var baseURL = "../../";
-var baseURL = "http://localhost:8080/engineering-certification/";
+var baseURL = "http://7px4rxk87c.52http.net/engineering-certification/";
 
 //工具集合Tools
 window.T = {};

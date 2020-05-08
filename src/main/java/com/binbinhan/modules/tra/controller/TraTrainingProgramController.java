@@ -3,6 +3,7 @@ package com.binbinhan.modules.tra.controller;
 import com.binbinhan.common.annotation.SysLog;
 import com.binbinhan.common.controller.AbstractController;
 import com.binbinhan.common.controller.R;
+import com.binbinhan.common.excel.EasyExcelUtils;
 import com.binbinhan.common.excel.ExcelUtils;
 import com.binbinhan.common.excel.ImportExcel;
 import com.binbinhan.common.utils.PageUtils;
@@ -135,7 +136,8 @@ public class TraTrainingProgramController extends AbstractController {
     public Object importExcel(@RequestParam("file") MultipartFile uFile, HttpServletRequest request) throws Exception {
 
         //解析excel，
-        List<TraTrainingProgramEntity> personList = FileUtil.importExcel(uFile, 0, 1, TraTrainingProgramEntity.class);
+//        List<TraTrainingProgramEntity> personList = FileUtil.importExcel(uFile, 0, 1, TraTrainingProgramEntity.class);
+        List<TraTrainingProgramEntity> personList = EasyExcelUtils.importExcel(uFile, 0, 2, 0,false,TraTrainingProgramEntity.class);
 
         System.out.println(personList);
         String error = "";
