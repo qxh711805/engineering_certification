@@ -1,13 +1,17 @@
 layui.use('form', function () {
     var form = layui.form();
-    var userIds = $("#userIds").val();
+    // var userIds = $("#userIds").val();
     var roleId = null;
+    $("#back").click(function (){
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+    });
     $("#add").click(function () {
         $.ajax({
             type: "POST",
             url: baseURL + "sys/user/addRole",
             data:{
-                'userIds':userIds,
+                'userIds':location.search.substring(1),
                 'roleId':roleId
             },
             success: function (r) {

@@ -3,7 +3,7 @@ $(function () {
         url: baseURL + 'sys/user/list',
         datatype: "json",
         colModel: [
-            // {label: '用户ID', name: 'userId', index: "user_id", width: 40, key: true},
+            {label: '用户ID', name: 'userId', index: "user_id", width: 40, key: true,hidden: true},
             // { label: '用户名', name: 'username', width: 75 },
             {label: '用户名', name: 'username', width: 70},
             {label: '姓名', name: 'name', width: 70},
@@ -38,7 +38,7 @@ $(function () {
             }
         ],
         viewrecords: true,
-        height: 385,
+        height: '420',
         rowNum: 10,
         rowList: [10, 30, 50],
         rownumbers: true,
@@ -138,12 +138,15 @@ var vm = new Vue({
                 title: "选择要添加的角色",
                 shade: [0.1, '#000'],
                 maxmin: false, //开启最大化最小化按钮
-                content: "user_addrole.html",
+                content: "user_addrole.html?"+userId.toString(),
                 scrollbar: false,
                 success: function (layero, index) {
-                    let body = layer.getChildFrame('body', index);
-                    console.log(userId.toString())
-                    body.find("#userIds").val(userId.toString());
+                    // let body = layer.getChildFrame('body', index);
+                    // console.log(userId.toString())
+                    // body.find("#userIds").val(userId.toString());
+                },
+                end: function(index, layero){
+                    vm.reload();
                 }
             });
         },

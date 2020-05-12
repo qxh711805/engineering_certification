@@ -19,13 +19,13 @@ $(function () {
                     let r =
                         '<a title="修改" class="btn btn-xs btn-primary" onclick="vm.update(' + row.trainingId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
                         '<a title="删除" class="btn btn-xs btn-primary" onclick="vm.del(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>' +
-                        '<a title="培养方案详情" class="btn btn-xs btn-primary" onclick="vm.trainInfo(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-pencil-square-o"></i></i></a>'
+                        '<a title="培养方案详情" class="btn btn-xs btn-primary" onclick="vm.trainInfo(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-eye"></i></i></a>'
                     return r;
                 }
             }
         ],
         viewrecords: true,
-        height: 385,
+        height: 420,
         rowNum: 10,
         rowList: [10, 30, 50],
         rownumbers: true,
@@ -275,18 +275,6 @@ var vm = new Vue({
                         layer.close(diaindx);
                     });
                     vm.reload();
-                    // $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function (r) {
-                    //     if (r.code < 0) {
-                    //         layer.close(loadingIndex);
-                    //         alert(r.msg);
-                    //     } else {
-                    //         msgSuccess('导入成功', function (index) {
-                    //             vm.reload();
-                    //             layer.close(loadingIndex);
-                    //             layer.close(diaindx);
-                    //         });
-                    //     }
-                    // });
                 },
                 success: function (layero, index) {
                     var iframeWin = layero.find('iframe')[0];
@@ -303,11 +291,11 @@ var vm = new Vue({
             });
         },
         trainInfo: function (trainingId) {
-            var diaindx = layer.open({
+        /*    var diaindx = layer.open({
                 type: 2,
                 // offset: ['50px', '100px'], // 弹出位置
                 area: ["900px", "400px"],
-                title: "详情信息",
+                title: ["详情信息"],
                 shade: [0.1, '#000'],
                 // maxmin: true, //开启最大化最小化按钮
                 content: "train_info.html?",
@@ -320,7 +308,8 @@ var vm = new Vue({
                     body.find("#trainingId").val(trainingId);
                 }
             });
-            layer.full(diaindx);
+            layer.full(diaindx);*/
+            $("iframe", window.parent.document).attr("src","modules/tra/train_details.html");
         },
         reload: function () {
             vm.showList = true;

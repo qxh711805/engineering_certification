@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理员列表</title>
+    <#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <div class="form-group col-sm-2">
+                <input type="hidden" class="form-control" v-model="q.id">
+            </div>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;添加培养方案</a>
+            <a class="btn btn-primary" @click="excelImp"><i class="fa fa-plus"></i>&nbsp;导入培养方案</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <input name="trainingId" id="trainingId" hidden>
+
+        <form class="form-horizontal">
+            <table style="width: 800px">
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">培养方案编号ID</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" v-model="traMajorCapabilityEntity.trainingId"
+                                       placeholder="" disabled/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">标准能力编号</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"
+                                       v-model="traMajorCapabilityEntity.standardCapacityNumber" placeholder=""/>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">支撑权重</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" v-model="traMajorCapabilityEntity.supportWeight"
+                                       placeholder=""/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">能力编号</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"
+                                       v-model="traMajorCapabilityEntity.capacityNumber"
+                                       placeholder=""/>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">父节点</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" v-model="traMajorCapabilityEntity.parentNode"
+                                       placeholder=""/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">能力描述</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control"
+                                       v-model="traMajorCapabilityEntity.capabilityDescription" placeholder=""/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                </tr>
+                <tr style="">
+                    <td colspan="2">
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label"></div>
+                            <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                            &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div >
+
+<script src="${request.contextPath}/statics/js/modules/tra/train_info.js?_${.now?long}"></script>
+</body>
+</html>
