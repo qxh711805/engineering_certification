@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地连接
-Source Server Version : 50728
-Source Host           : localhost:3306
-Source Database       : engineering_certification
+Source Server         : engineer.binhan.vip
+Source Server Version : 50730
+Source Host           : 129.211.13.223:3306
+Source Database       : engineer
 
 Target Server Type    : MYSQL
-Target Server Version : 50728
+Target Server Version : 50730
 File Encoding         : 65001
 
-Date: 2020-05-14 21:22:01
+Date: 2020-05-14 22:06:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,6 +33,10 @@ CREATE TABLE `sys_dict` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='数据字典表';
 
 -- ----------------------------
+-- Records of sys_dict
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_log
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
@@ -47,6 +51,10 @@ CREATE TABLE `sys_log` (
   `create_date` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统日志';
+
+-- ----------------------------
+-- Records of sys_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -65,25 +73,24 @@ CREATE TABLE `sys_menu` (
 ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COMMENT='菜单管理';
 
 -- ----------------------------
--- 初始化菜单数据
+-- Records of sys_menu
 -- ----------------------------
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('1', '0', '系统管理', NULL, NULL, '0', 'fa fa-cog', '2');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('2', '0', '用户管理', 'modules/sys/user.html', NULL, '1', 'fa fa-user', '1');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('3', '1', '角色管理', 'modules/sys/role.html', NULL, '1', 'fa fa-user-secret', '2');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('4', '1', '菜单管理', 'modules/sys/menu.html', NULL, '1', 'fa fa-th-list', '3')；
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('5', '2', '查看', NULL, 'sys:user:list,sys:user:info', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('6', '2', '新增', NULL, 'sys:user:save,sys:role:select', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('7', '2', '修改', NULL, 'sys:user:update,sys:role:select', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('8', '2', '删除', NULL, 'sys:user:delete', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('9', '3', '查看', NULL, 'sys:role:list,sys:role:info', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('10', '3', '新增', NULL, 'sys:role:save,sys:menu:perms', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('11', '3', '修改', NULL, 'sys:role:update,sys:menu:perms', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('12', '3', '删除', NULL, 'sys:role:delete', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('13', '4', '查看', NULL, 'sys:menu:list,sys:menu:info', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('14', '4', '新增', NULL, 'sys:menu:save,sys:menu:select', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('15', '4', '修改', NULL, 'sys:menu:update,sys:menu:select', '2', NULL, '0');
-INSERT INTO `engineering_certification`.`sys_menu` (`menu_id`, `parent_id`, `name`, `url`, `perms`, `type`, `icon`, `order_num`) VALUES ('16', '4', '删除', NULL, 'sys:menu:delete', '2', NULL, '0');
-
+INSERT INTO `sys_menu` VALUES ('1', '0', '系统管理', null, null, '0', 'fa fa-cog', '2');
+INSERT INTO `sys_menu` VALUES ('2', '0', '用户管理', 'modules/sys/user.html', null, '1', 'fa fa-user', '1');
+INSERT INTO `sys_menu` VALUES ('3', '1', '角色管理', 'modules/sys/role.html', null, '1', 'fa fa-user-secret', '2');
+INSERT INTO `sys_menu` VALUES ('4', '1', '菜单管理', 'modules/sys/menu.html', null, '1', 'fa fa-th-list', '3');
+INSERT INTO `sys_menu` VALUES ('5', '2', '查看', null, 'sys:user:list,sys:user:info', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('6', '2', '新增', null, 'sys:user:save,sys:role:select', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('7', '2', '修改', null, 'sys:user:update,sys:role:select', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('8', '2', '删除', null, 'sys:user:delete', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('9', '3', '查看', null, 'sys:role:list,sys:role:info', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('10', '3', '新增', null, 'sys:role:save,sys:menu:perms', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('11', '3', '修改', null, 'sys:role:update,sys:menu:perms', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('12', '3', '删除', null, 'sys:role:delete', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('13', '4', '查看', null, 'sys:menu:list,sys:menu:info', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('14', '4', '新增', null, 'sys:menu:save,sys:menu:select', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('15', '4', '修改', null, 'sys:menu:update,sys:menu:select', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('16', '4', '删除', null, 'sys:menu:delete', '2', null, '0');
 
 -- ----------------------------
 -- Table structure for sys_oss
@@ -97,6 +104,10 @@ CREATE TABLE `sys_oss` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文件上传';
 
 -- ----------------------------
+-- Records of sys_oss
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
@@ -106,7 +117,11 @@ CREATE TABLE `sys_role` (
   `remark` varchar(100) DEFAULT NULL COMMENT '备注',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='角色';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色';
+
+-- ----------------------------
+-- Records of sys_role
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -117,7 +132,11 @@ CREATE TABLE `sys_role_menu` (
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
   `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COMMENT='角色与菜单对应关系';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色与菜单对应关系';
+
+-- ----------------------------
+-- Records of sys_role_menu
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -142,14 +161,12 @@ CREATE TABLE `sys_user` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=8673 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='系统用户';
 
 -- ----------------------------
--- 初始化用户信息 账号：administrator 密码：123456
--- 超级管理员拥有超级权限
+-- Records of sys_user
 -- ----------------------------
-INSERT INTO `engineer`.`sys_user` (`user_id`, `username`, `name`, `password`, `salt`, `school_name`, `school_code`, `college_name`, `department`, `major`, `job_number`, `id_number`, `email`, `mobile`, `status`, `create_time`) VALUES ('1', 'administrator', '超级管理员', '5f9c50b9d370e553b076ecf20870baab6dff1d061fb15868b62ca17f04b70a16', 'YzcmCZNvbXocrsz9dm8e', NULL, '', '', '', '', 'administrator', '', 'root@binhan.vip', '', '1', '2020-11-01 11:11:11');
-
+INSERT INTO `sys_user` VALUES ('1', 'administrator', '超级管理员', '5f9c50b9d370e553b076ecf20870baab6dff1d061fb15868b62ca17f04b70a16', 'YzcmCZNvbXocrsz9dm8e', null, '', '', '', '', 'administrator', '', 'root@binhan.vip', '', '1', '2020-11-01 11:11:11');
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -160,7 +177,11 @@ CREATE TABLE `sys_user_role` (
   `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
   `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COMMENT='用户与角色对应关系';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户与角色对应关系';
+
+-- ----------------------------
+-- Records of sys_user_role
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tra_course_capability_list
@@ -176,7 +197,11 @@ CREATE TABLE `tra_course_capability_list` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `training_id` bigint(20) NOT NULL COMMENT '培养方案ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COMMENT='课程能力清单';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='课程能力清单';
+
+-- ----------------------------
+-- Records of tra_course_capability_list
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tra_course_info
@@ -197,7 +222,11 @@ CREATE TABLE `tra_course_info` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `training_id` bigint(20) NOT NULL COMMENT '培养方案ID',
   PRIMARY KEY (`course_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COMMENT='课程信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='课程信息';
+
+-- ----------------------------
+-- Records of tra_course_info
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tra_major_capability
@@ -213,7 +242,11 @@ CREATE TABLE `tra_major_capability` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `training_id` bigint(20) NOT NULL COMMENT '培养方案ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COMMENT='专业能力';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专业能力';
+
+-- ----------------------------
+-- Records of tra_major_capability
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tra_major_capability_target
@@ -227,7 +260,11 @@ CREATE TABLE `tra_major_capability_target` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `training_id` bigint(20) NOT NULL COMMENT '培养方案ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='专业培养目标';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='专业培养目标';
+
+-- ----------------------------
+-- Records of tra_major_capability_target
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tra_standard_capability
@@ -244,7 +281,11 @@ CREATE TABLE `tra_standard_capability` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `training_id` bigint(20) NOT NULL COMMENT '培养方案ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='标准能力';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='标准能力';
+
+-- ----------------------------
+-- Records of tra_standard_capability
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tra_training_goal_support_list
@@ -258,7 +299,11 @@ CREATE TABLE `tra_training_goal_support_list` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `training_id` bigint(20) NOT NULL COMMENT '培养方案ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COMMENT='培养目标支撑清单';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='培养目标支撑清单';
+
+-- ----------------------------
+-- Records of tra_training_goal_support_list
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tra_training_program
@@ -278,4 +323,8 @@ CREATE TABLE `tra_training_program` (
   `status` varchar(20) DEFAULT NULL COMMENT '状态',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`training_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COMMENT='培养方案';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='培养方案';
+
+-- ----------------------------
+-- Records of tra_training_program
+-- ----------------------------
