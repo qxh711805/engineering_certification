@@ -1,5 +1,6 @@
 package com.binbinhan.modules.tra.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -30,18 +31,22 @@ public class TraCourseCapabilityListEntity implements Serializable {
 	/**
 	 * 课程编号
 	 */
+	@Excel(name = "课程编号")
 	private String courseNumber;
 	/**
 	 * 能力
 	 */
+	@Excel(name = "能力")
 	private Double capability;
 	/**
 	 * 权重
 	 */
+	@Excel(name = "权重")
 	private Double weight;
 	/**
 	 * 课程名称
 	 */
+	@Excel(name = "课程名称")
 	private String courseName;
 	/**
 	 * 创建时间

@@ -1,10 +1,11 @@
 $(function () {
+    let h = $("#rrapp").height() - $(".grid-btn").height()- $("#jqGridPager").height()  -95;
     $("#jqGrid").jqGrid({
         url: baseURL + 'tra/tramajorcapability/list',
         datatype: "json",
         colModel: [
-            {label: 'ID', name: 'id', index: "id", width: 40, key: true},
-            {label: '培养方案编号ID', name: 'trainingId', index: "trainingId", width: 40, key: true},
+            {label: 'ID', name: 'id', index: "id", width: 40, key: true,hidden:true},
+            {label: '培养方案编号ID', name: 'trainingId', index: "trainingId", width: 40},
             {label: '标准能力编号', name: 'standardCapacityNumber', width: 90},
             {label: '支撑权重', name: 'supportWeight', width: 70},
             {label: '能力编号', name: 'capacityNumber', width: 70},
@@ -21,7 +22,7 @@ $(function () {
             }
         ],
         viewrecords: true,
-        height: 385,
+        height: h,
         rowNum: 10,
         rowList: [10, 30, 50],
         rownumbers: true,
@@ -68,6 +69,7 @@ var vm = new Vue({
         q: {
             trainingId: ""
         },
+        trainingId: parent.location.search.substring(1),
         showList: true,
         title: null,
         roleList: {},

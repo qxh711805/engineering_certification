@@ -54,24 +54,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
         IPage<SysUserEntity> page = new Query<SysUserEntity>().getPage(params);
         List<SysUserEntity> list = baseMapper.queryPage(page, ShiroUtils.getUserId(), keyword);
         page.setRecords(list);
-//        IPage<SysUserEntity> page = this.page(
-//                new Query<SysUserEntity>().getPage(params),
-//                new QueryWrapper<SysUserEntity>()
-//                        .ne("user_id", Constant.SUPER_ADMIN)
-//                        .like(StringUtils.isNotBlank(keyword), "username", keyword)
-//                        .apply(params.get(Constant.SQL_FILTER) != null, (String) params.get(Constant.SQL_FILTER))
-//        );
-//
-//        Map<Long, Long> userRoleMap = sysUserRoleService.list().stream().collect(Collectors.toMap(SysUserRoleEntity::getUserId, SysUserRoleEntity::getRoleId));
-//        Map<Long, SysRoleEntity> sysRoleEntityMap = sysRoleService.list().stream().collect(Collectors.toMap(SysRoleEntity::getRoleId, r -> r));
-//
-//        for (SysUserEntity sysUserEntity : page.getRecords()) {
-//            Long userRoleId = userRoleMap.get(sysUserEntity.getUserId());
-//            if (userRoleId != null) {
-//                sysUserEntity.setRoleName(sysRoleEntityMap.get(userRoleId).getRoleName());
-//            }
-//        }
-
         return new PageUtils(page);
     }
 

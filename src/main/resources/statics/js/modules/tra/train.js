@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'tra/tratrainingprogram/list',
+        url: baseURL + 'tra/training/program/list',
         datatype: "json",
         colModel: [
             {label: 'ID', name: 'trainingId', index: "trainingId", width: 20, key: true},
@@ -19,7 +19,7 @@ $(function () {
                     let r =
                         '<a title="修改" class="btn btn-xs btn-primary" onclick="vm.update(' + row.trainingId + ')"><i class="fa fa-pencil-square-o"></i></a>' +
                         '<a title="删除" class="btn btn-xs btn-primary" onclick="vm.del(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-trash-o"></i></i></a>' +
-                        '<a title="培养方案详情" class="btn btn-xs btn-primary" onclick="vm.trainInfo(' + row.trainingId + ')" style="margin-left: 5px"><i class="fa fa-eye"></i></i></a>'
+                        '<a title="培养方案详情" class="btn btn-xs btn-primary" onclick="vm.trainInfo(' + row.trainingId + ',\'' + row.trainingProgram + '\',\'' + row.version + '\')" style="margin-left: 5px"><i class="fa fa-eye"></i></i></a>'
                     return r;
                 }
             }
@@ -120,11 +120,11 @@ var vm = new Vue({
                 processData: false,
                 success: function (res) {
                     console.log(res.data);
-                    if(res.data["code"]=="succ"){
+                    if (res.data["code"] == "succ") {
                         alert('成功');
-                    }else if(res.data["code"]=="err"){
+                    } else if (res.data["code"] == "err") {
                         alert('失败');
-                    }else{
+                    } else {
                         console.log(res);
                     }
                 }
@@ -167,21 +167,6 @@ var vm = new Vue({
                     layer.closeAll();
                 }
             })
-            // $.ajax({
-            //     type: "POST",
-            //     url: baseURL + "sys/user/addRole",
-            //     contentType: "application/json",
-            //     data: JSON.stringify(user),
-            //     success: function (r) {
-            //         if (r.code == 0) {
-            //             alert('操作成功', function () {
-            //                 vm.reload();
-            //             });
-            //         } else {
-            //             alert(r.msg);
-            //         }
-            //     }
-            // });
         },
         delRole: function (user) {
             confirm('确定要删除' + user.name + '的角色？', function () {
@@ -215,7 +200,7 @@ var vm = new Vue({
             confirm('确定要删除选中的记录？', function () {
                 $.ajax({
                     // type: "POST",
-                    url: baseURL + "tra/tratrainingprogram/delete/" + userIds,
+                    url: baseURL + "tra/training/program/delete/" + userIds,
                     // contentType: "application/json",
                     // data: JSON.stringify(userIds),
                     success: function (r) {
@@ -231,7 +216,7 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
-            var url = vm.TraTrainingProgramEntity.trainingId == null ? "tra/tratrainingprogram/save" : "tra/tratrainingprogram/update";
+            var url = vm.TraTrainingProgramEntity.trainingId == null ? "tra/training/program/save" : "tra/training/program/update";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,
@@ -249,7 +234,7 @@ var vm = new Vue({
             });
         },
         getUser: function (trainingId) {
-            $.get(baseURL + "tra/tratrainingprogram/info/" + trainingId, function (r) {
+            $.get(baseURL + "tra/training/program/info/" + trainingId, function (r) {
                 console.log(r)
                 vm.TraTrainingProgramEntity = r.traTrainingProgramEntity;
             });
@@ -290,26 +275,8 @@ var vm = new Vue({
                 }
             });
         },
-        trainInfo: function (trainingId) {
-        /*    var diaindx = layer.open({
-                type: 2,
-                // offset: ['50px', '100px'], // 弹出位置
-                area: ["900px", "400px"],
-                title: ["详情信息"],
-                shade: [0.1, '#000'],
-                // maxmin: true, //开启最大化最小化按钮
-                content: "train_info.html?",
-                scrollbar: false,
-                success: function (layero, index) {
-                    let body = layer.getChildFrame('body', index);
-                    if (trainingId == null){
-                        trainingId = getSelectedRows();
-                    }
-                    body.find("#trainingId").val(trainingId);
-                }
-            });
-            layer.full(diaindx);*/
-            $("iframe", window.parent.document).attr("src","modules/tra/train_details.html");
+        trainInfo: function (trainingId, trainingProgram, version) {
+            $("iframe", window.parent.document).attr("src", "modules/tra/train_details.html?" + trainingId + "&" + trainingProgram + "&" + version);
         },
         reload: function () {
             vm.showList = true;

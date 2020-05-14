@@ -13,7 +13,7 @@ import java.util.Map;
  * @作者 binbinhan
  * @date 2020-05-05 00:39:25
  */
-public interface TraMajorCapabilityService extends IService<TraMajorCapabilityEntity> {
+public interface TraMajorCapabilityService extends IService<TraMajorCapabilityEntity> , TraExcelService<TraMajorCapabilityEntity>{
 
     PageUtils queryPage(Map<String, Object> params);
 }

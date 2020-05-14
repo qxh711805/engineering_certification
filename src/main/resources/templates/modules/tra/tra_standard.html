@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>管理员列表</title>
+    <title>标准能力</title>
     <#include "/header.html">
 </head>
 <style>
@@ -13,11 +13,15 @@
     }
 </style>
 <body>
-<div id="rrapp" v-cloak style="height: 100%">
+<div id="rrapp" v-cloak  style="height: 100%">
     <div v-show="showList">
-        <div class="grid-btn" >
-            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;添加培养方案</a>
-            <a class="btn btn-primary" @click="excelImp"><i class="fa fa-plus"></i>&nbsp;导入培养方案</a>
+        <div class="grid-btn">
+            <div class="form-group col-sm-2" style="padding:0px 15px 0px 0px">
+                <input type="text" class="form-control" v-model="q.keyword" @keyup.enter="query" placeholder="认证标准">
+            </div>
+            <a class="btn btn-default" @click="query">查询</a>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增标准能力</a>
+            <a class="btn btn-primary" @click="excelImp"><i class="fa fa-plus"></i>&nbsp;导入标准能力</a>
         </div>
         <table id="jqGrid"></table>
         <div id="jqGridPager"></div>
@@ -25,17 +29,22 @@
 
     <div v-show="!showList" class="panel panel-default">
         <div class="panel-heading">{{title}}</div>
-        <input name="trainingId" id="trainingId" hidden>
-
         <form class="form-horizontal">
             <table style="width: 800px">
                 <tr>
                     <td>
                         <div class="form-group">
-                            <div class="col-sm-2 control-label">培养方案编号ID</div>
+                            <div class="col-sm-2 control-label">认证标准</div>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" v-model="traMajorCapabilityEntity.trainingId"
-                                       placeholder="" disabled/>
+                                <input type="text" class="form-control" v-model="dataInfo.standard" placeholder="认证标准"/>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">版本</div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" v-model="dataInfo.version" placeholder="版本"/>
                             </div>
                         </div>
                     </td>
@@ -43,58 +52,47 @@
                 <tr>
                     <td>
                         <div class="form-group">
-                            <div class="col-sm-2 control-label">标准能力编号</div>
+                            <div class="col-sm-2 control-label">发布单位</div>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control"
-                                       v-model="traMajorCapabilityEntity.standardCapacityNumber" placeholder=""/>
+                                <input type="text" class="form-control" v-model="dataInfo.issuedBy" placeholder="发布单位"/>
                             </div>
                         </div>
                     </td>
-                    <td>
-                        <div class="form-group">
-                            <div class="col-sm-2 control-label">支撑权重</div>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" v-model="traMajorCapabilityEntity.supportWeight"
-                                       placeholder=""/>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
                     <td>
                         <div class="form-group">
                             <div class="col-sm-2 control-label">能力编号</div>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control"
-                                       v-model="traMajorCapabilityEntity.capacityNumber"
-                                       placeholder=""/>
+                                <input type="text" class="form-control" v-model="dataInfo.capacityNumber" placeholder="能力编号"/>
                             </div>
                         </div>
                     </td>
-                    <td>
+                </tr>
+                <tr>
+                    <td style="height: 50px">
                         <div class="form-group">
                             <div class="col-sm-2 control-label">父节点</div>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" v-model="traMajorCapabilityEntity.parentNode"
-                                       placeholder=""/>
+                                <input type="text" class="form-control" v-model="dataInfo.parentNode" placeholder="父节点"/>
+                            </div>
+                        </div>
+                    </td>
+                    <td rowspan="2">
+                        <div class="form-group">
+                            <div class="col-sm-2 control-label">能力描述</div>
+                            <div class="col-sm-10">
+                                <textarea style="height: 200px" class="form-control" v-model="dataInfo.capabilityDescription" placeholder="能力描述"></textarea>
                             </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div class="form-group">
-                            <div class="col-sm-2 control-label">能力描述</div>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control"
-                                       v-model="traMajorCapabilityEntity.capabilityDescription" placeholder=""/>
-                            </div>
-                        </div>
+                        &nbsp;
                     </td>
                 </tr>
 
-                </tr>
-                <tr style="">
+
+                <tr>
                     <td colspan="2">
                         <div class="form-group">
                             <div class="col-sm-2 control-label"></div>
@@ -106,8 +104,8 @@
             </table>
         </form>
     </div>
-</div >
+</div>
 
-<script src="${request.contextPath}/statics/js/modules/tra/train_info.js?_${.now?long}"></script>
+<script src="${request.contextPath}/statics/js/modules/tra/tra_standard.js?_${.now?long}"></script>
 </body>
 </html>

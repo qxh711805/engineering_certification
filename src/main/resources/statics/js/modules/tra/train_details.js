@@ -1,27 +1,11 @@
-var setting = {
-    data: {
-        simpleData: {
-            enable: true,
-            idKey: "deptId",
-            pIdKey: "parentId",
-            rootPId: -1
-        },
-        key: {
-            url: "nourl"
-        }
-    }
-};
-var ztree;
-
 var vm = new Vue({
     el: '#rrapp',
     data: {
-
-        q: {
-            trainingId: ""
-        },
         showList: true,
         title: null,
+        trainingId: decodeURI(location.search.substring(1).split("&")[0]),
+        trainingProgram: decodeURI(location.search.substring(1).split("&")[1]),
+        version: decodeURI(location.search.substring(1).split("&")[2]),
         roleList: {},
         traMajorCapabilityEntity: {
             trainingId: null,
@@ -38,7 +22,8 @@ var vm = new Vue({
             parent.vm.navTitle = "培养方案";
             $("iframe", window.parent.document).attr("src", "modules/tra/train.html");
         },
-        jump: function (src) {
+        jump: function (src, event) {
+            $("#title").html(event.currentTarget.innerHTML);
             $("#details_iframe").attr("src", src);
         }
     }

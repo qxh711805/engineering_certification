@@ -1,5 +1,6 @@
 package com.binbinhan.modules.tra.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -26,14 +27,17 @@ public class TraTrainingGoalSupportListEntity implements Serializable {
 	/**
 	 * 培养目标
 	 */
+	@Excel(name = "培养目标")
 	private String trainingObjectives;
 	/**
 	 * 毕业要求
 	 */
+	@Excel(name = "毕业要求")
 	private Integer graduationRequirements;
 	/**
 	 * 权重
 	 */
+	@Excel(name = "权重")
 	private Double weight;
 	/**
 	 * 创建时间

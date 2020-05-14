@@ -10,7 +10,7 @@
     }
 
     .aBtn {
-        padding: 15px 0px;
+        padding: 13px 0px;
         text-align: center;
         width: 100%;
         font-size: large
@@ -24,61 +24,38 @@
     }
 </style>
 <body style="height: 100%">
-<div style="padding:10px 4%; width: 100%;height: 45px; font-size: large;background-color: #ced5d2">
-    <span style="padding-top: 10px;padding-bottom: 10px">培养方案详情</span>
-</div>
-<div id="rrapp" v-cloak style="height: 85%;margin-top: 10px">
-    <div style="width: 18%;float: left;padding-left:  4%;padding-right: 4%">
-        <div>
-            <a class="btn btn-default aBtn" @click="back">培养方案</a>
+<div id="rrapp" v-cloak style="height: 100%;">
+    <div style="padding:10px 4%; width: 100%;height: 45px; font-size: large;background-color: #ced5d2">
+        <div style="width: 18%;height: 100%;float: left">
+            <span style="padding-top: 10px;padding-bottom: 10px;">培养方案详情</span>
         </div>
-        <div>
-            <i class="fa fa-sort-desc fa-4x iBtn" style=""></i>
-        </div>
-        <div>
-            <a class="btn btn-primary  aBtn"  @click="jump('train_info.html')" >标准能力</a>
-        </div>
-        <div>
-            <i class="fa fa-sort-desc fa-4x  iBtn"></i>
-        </div>
-        <div>
-            <a class="btn btn-primary  aBtn"  @click="jump('train_info.html')" >专业培养目标</a>
-        </div>
-        <div>
-            <i class="fa fa-sort-desc fa-4x  iBtn"></i>
-        </div>
-        <div>
-            <a class="btn btn-primary  aBtn"  @click="jump('train_info.html')" >培养目标支撑清单</a>
-        </div>
-        <div>
-            <i class="fa fa-sort-desc fa-4x  iBtn"></i>
-        </div>
-        <div>
-            <a class="btn btn-primary  aBtn"  @click="jump('train_info.html')" >课程信息</a>
-        </div>
-        <div>
-            <i class="fa fa-sort-desc fa-4x  iBtn"></i>
-        </div>
-        <div>
-            <a class="btn btn-primary  aBtn"  @click="jump('train_info.html')" >课程能力清单</a>
-        </div>
-        <div>
-            <i class="fa fa-sort-desc fa-4x  iBtn"></i>
-        </div>
-        <div>
-            <a class="btn btn-primary  aBtn"  @click="jump('train_info.html')" >其他信息</a>
-        </div>
-        <div>
-            <i class="fa fa-sort-desc fa-4x  iBtn"></i>
-        </div>
-        <div>
-            <a class="btn btn-primary  aBtn"  @click="jump('train_info.html')" >教学大纲</a>
+        <div style="height: 100%;float: left">
+            <span style="font-weight:bold"> {{trainingProgram}}&nbsp;>&nbsp;{{version}}&nbsp;>&nbsp; </span><span
+                style="font-weight:bold" id="title">标准能力</span>
         </div>
     </div>
-    <iframe id="details_iframe" src="train_info.html" frameborder="0" id="demoAdmin"
-            style="width: 80%; height: 90%; float: right"></iframe>
+    <div style="width: 18%;float: left;padding-left:  4%;padding-right: 4%;margin-top: 10px">
+        <a class="btn btn-default aBtn" @click="back">培养方案</a>
+        <i class="fa fa-sort-desc fa-4x iBtn" style=""></i>
+        <a class="btn btn-primary aBtn" @click="jump('tra_standard.html',$event)">标准能力</a>
+        <i class="fa fa-sort-desc fa-4x iBtn" style=""></i>
+        <a class="btn btn-primary  aBtn" @click="jump('tra_major.html',$event)">专业能力</a>
+        <i class="fa fa-sort-desc fa-4x  iBtn"></i>
+        <a class="btn btn-primary  aBtn" @click="jump('tra_major_capability.html',$event)">专业培养目标</a>
+        <i class="fa fa-sort-desc fa-4x  iBtn"></i>
+        <a class="btn btn-primary  aBtn" @click="jump('tra_training_goal_support_list.html',$event)">培养目标支撑清单</a>
+        <i class="fa fa-sort-desc fa-4x  iBtn"></i>
+        <a class="btn btn-primary  aBtn" @click="jump('tra_course_info.html',$event)">课程信息</a>
+        <i class="fa fa-sort-desc fa-4x  iBtn"></i>
+        <a class="btn btn-primary  aBtn" @click="jump('tra_course_capability_list.html',$event)">课程能力清单</a>
+<!--        <i class="fa fa-sort-desc fa-4x  iBtn"></i>-->
+<!--        <a class="btn btn-primary  aBtn" @click="jump('train_info.html',$event)">其他信息</a>-->
+<!--        <i class="fa fa-sort-desc fa-4x  iBtn"></i>-->
+<!--        <a class="btn btn-primary  aBtn" @click="jump('train_info.html',$event)">教学大纲</a>-->
+    </div>
+    <iframe id="details_iframe" src="tra_standard.html" frameborder="0" id="demoAdmin"
+            style="width: 80%; height: 90%; float: right;margin-top: 10px"></iframe>
 </div>
-
 <script src="${request.contextPath}/statics/js/modules/tra/train_details.js?_${.now?long}"></script>
 </body>
 </html>

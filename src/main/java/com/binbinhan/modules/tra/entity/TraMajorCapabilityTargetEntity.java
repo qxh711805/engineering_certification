@@ -1,5 +1,6 @@
 package com.binbinhan.modules.tra.entity;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -19,17 +20,24 @@ public class TraMajorCapabilityTargetEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 编号
+	 * id
 	 */
 	@TableId
+	private Long id;
+	/**
+	 * 编号
+	 */
+	@Excel(name = "编号")
 	private Integer number;
 	/**
 	 * 标题
 	 */
+	@Excel(name = "标题")
 	private String title;
 	/**
 	 * 描述
 	 */
+	@Excel(name = "描述")
 	private String description;
 	/**
 	 * 创建时间

@@ -3,7 +3,7 @@ $.jgrid.defaults.width = 1000;
 $.jgrid.defaults.responsive = true;
 $.jgrid.defaults.styleUI = 'Bootstrap';
 
-// var baseURL = "../../";
+// var baseURL = "http://129.211.13.223:8080/";
 // var baseURL = "http://7px4rxk87c.52http.net/engineering-certification/";
 var baseURL = "http://localhost:8080/engineering-certification/";
 

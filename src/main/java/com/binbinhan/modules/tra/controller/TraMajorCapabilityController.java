@@ -34,7 +34,7 @@ import java.util.Map;
  * @date 2020-05-05 00:39:25
  */
 @RestController
-@RequestMapping("tra/tramajorcapability")
+@RequestMapping("tra/major/capability")
 public class TraMajorCapabilityController extends AbstractController {
     @Autowired
     private TraMajorCapabilityService traMajorCapabilityService;
@@ -88,14 +88,21 @@ public class TraMajorCapabilityController extends AbstractController {
         }
 
     }
-    @RequestMapping(value = "delete/{trainingId}")
+
+
+    @RequestMapping("/delete")
+    public R delete(@RequestBody Long id) {
+        traMajorCapabilityService.removeById(id);
+        return R.ok();
+    }
+/*    @RequestMapping(value = "delete/{trainingId}")
     public R delete(@PathVariable("trainingId") Long trainingId) {
 
         System.out.println("---save-----"+trainingId);
 
         traMajorCapabilityService.removeById(trainingId);
         return R.ok();
-    }
+    }*/
     /**
      * Excel文件上传
      *
@@ -129,13 +136,6 @@ public class TraMajorCapabilityController extends AbstractController {
     @RequestMapping("/save")
 //    @RequiresPermissions("sys:user:save")
     public R save(@RequestBody TraMajorCapabilityEntity traMajorCapabilityEntity) {
-//        if (user.getUsername() == null || "".equals(user.getUsername())) {
-//            user.setUsername(user.getJobNumber());
-//        }
-//        ValidatorUtils.validateEntity(user, AddGroup.class);
-        System.out.println("---save-----"+traMajorCapabilityEntity);
-        traMajorCapabilityEntity.setTrainingId(1L);
-
         traMajorCapabilityService.save(traMajorCapabilityEntity);
         return R.ok();
     }
@@ -151,6 +151,9 @@ public class TraMajorCapabilityController extends AbstractController {
     public R getById(@PathVariable("id") Long id) {
         TraMajorCapabilityEntity  traMajorCapabilityEntity= traMajorCapabilityService.getById(id);
 
-        return R.ok().put("traMajorCapabilityEntity", traMajorCapabilityEntity);
+        return R.ok().put("data", traMajorCapabilityEntity);
     }
+
+
+    //未修改
 }

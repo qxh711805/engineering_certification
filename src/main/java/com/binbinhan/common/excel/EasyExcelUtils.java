@@ -113,7 +113,7 @@ public class EasyExcelUtils {
      * @param response
      * @param workbook excel数据
      */
-    private static void downLoadExcel(String fileName, HttpServletResponse response, Workbook workbook) throws IOException {
+    public static void downLoadExcel(String fileName, HttpServletResponse response, Workbook workbook) throws IOException {
         try {
             response.setCharacterEncoding("UTF-8");
             response.setHeader("content-Type", "application/vnd.ms-excel");

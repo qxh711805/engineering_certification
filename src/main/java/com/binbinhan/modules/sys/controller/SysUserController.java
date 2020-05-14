@@ -300,7 +300,7 @@ public class SysUserController extends AbstractController {
                     Map<String,List<SysUserEntity>> userMap = new HashMap<>();
                     userMap.put("teacherList",teacherList);
                     userMap.put("studentList",studentList);
-                    request.getSession().setAttribute("deviceInfo_in_session", userMap);
+                    request.getSession().setAttribute("userInfo_in_session", userMap);
                     map.put("isSave", true);
                 }
                 map.put("error", error);
@@ -324,7 +324,6 @@ public class SysUserController extends AbstractController {
 
         @SuppressWarnings("unchecked")
         Map<String,List<SysUserEntity>>  userMap = (Map<String,List<SysUserEntity>> ) request.getSession().getAttribute(sessionName);
-
 
         if (userMap == null) {
             return R.error(-1, "请重新选择文件!");
