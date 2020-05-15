@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.binbinhan.modules.tra.service.TraCourseInfoService;
 
 import java.security.KeyStore;
+import java.util.Date;
 import java.util.Map;
 
 
@@ -44,6 +45,7 @@ public class TraCourseInfoController extends AbstractController {
 
     @RequestMapping("/save")
     public R save(@RequestBody TraCourseInfoEntity data) {
+        data.setCreateTime(new Date());
         traCourseInfoService.save(data);
         return R.ok();
     }

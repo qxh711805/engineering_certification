@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,6 @@ public class TraTrainingProgramController extends AbstractController {
         return R.ok();
     }
 
-    @SysLog("保存用户")
     @RequestMapping("/save")
 //    @RequiresPermissions("sys:user:save")
     public R save(@RequestBody TraTrainingProgramEntity traTrainingProgramEntity) {
@@ -57,6 +57,7 @@ public class TraTrainingProgramController extends AbstractController {
 //            user.setUsername(user.getJobNumber());
 //        }
 //        ValidatorUtils.validateEntity(user, AddGroup.class);
+        traTrainingProgramEntity.setCreateTime(new Date());
         traTrainingProgramService.save(traTrainingProgramEntity);
         return R.ok();
     }

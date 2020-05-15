@@ -241,7 +241,7 @@ var vm = new Vue({
                 yes: function (index, layero) {
                     //loading层
                     var loadingIndex = layer.load(2, {shade: [0.1, '#fff']});
-                    $.get(baseURL + 'sys/user/saveImport/deviceInfo_in_session', function (r) {
+                    $.get(baseURL + 'sys/user/saveImport/userInfo_in_session', function (r) {
                         if (r.code < 0) {
                             layer.close(loadingIndex);
                             alert(r.msg);
@@ -261,10 +261,10 @@ var vm = new Vue({
                     }
                 },
                 cancel: function (index, layero) {
-                    // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
+                    $.get(baseURL + 'dev/device/removeSession/userInfo_in_session', function(r) {});
                 },
                 end: function (index, layero) {
-                    // $.get(baseURL + 'dev/device/removeSession/deviceInfo_in_session', function(r) {});
+                    $.get(baseURL + 'dev/device/removeSession/userInfo_in_session', function(r) {});
                 }
             });
         },
@@ -273,7 +273,7 @@ var vm = new Vue({
             var page = $("#jqGrid").jqGrid('getGridParam', 'page');
             $("#jqGrid").jqGrid('setGridParam', {
                 postData: {'keyword': vm.q.keyword},
-                page: page
+                page: 1
             }).trigger("reloadGrid");
         }
     }

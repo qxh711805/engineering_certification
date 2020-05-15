@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import com.binbinhan.modules.tra.service.TraStandardCapabilityService;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,7 @@ public class TraStandardCapabilityController extends AbstractController {
 
     @RequestMapping("/save")
     public R save(@RequestBody TraStandardCapabilityEntity data) {
+        data.setCreateTime(new Date());
         traStandardCapabilityService.save(data);
         return R.ok();
     }

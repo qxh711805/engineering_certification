@@ -116,7 +116,7 @@ var vm = new Vue({
             });
         },
         saveOrUpdate: function () {
-            var url = vm.dataInfo.id == null ? "tra/course/info/save" : "tra/course/info/update";
+            var url = vm.dataInfo.courseId == null ? "tra/course/info/save" : "tra/course/info/update";
             $.ajax({
                 type: "POST",
                 url: baseURL + url,

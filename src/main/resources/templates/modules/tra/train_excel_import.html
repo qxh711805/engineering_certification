@@ -19,7 +19,7 @@
     <div class="btns">
         <div style="display: none" id="picker">选择文件培养方案</div>
         <button name="chooseFile" label="选择文件培养方案" onclick="chooseFile()" style="margin-left: 5px">选择文件</button><input style="background-color: #e6e6e6;width: 290px;height: 27px;margin-left: 10px;" id="fileName" readonly="readonly" onclick="chooseFile();">
-    	<a style="color:green;font-size:14px;margin-right: 5px;" href="${request.contextPath}/tra/tratrainingprogram/getFile">下载培养方案导入模板</a>
+    	<a style="color:green;font-size:14px;margin-right: 5px;" href="${request.contextPath}/tra/training/program/getFile">下载导入模板</a>
     </div>
    <!--  <div class="progress progress-striped active" style="display: none"><div class="progress-bar" role="progressbar" style="width: 100%;"></div></div> -->
     <div style="height: 100px;">
@@ -49,7 +49,7 @@
 				swf : './Uploader.swf',
 	
 				// 文件接收服务端。
-				server : baseURL+'/tra/tratrainingprogram/fileUpload',
+				server : baseURL+'/tra/training/program/fileUpload',
 	
 				threads : 1,
 	

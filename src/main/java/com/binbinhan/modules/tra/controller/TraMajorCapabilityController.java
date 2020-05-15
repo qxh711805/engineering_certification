@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,6 +137,7 @@ public class TraMajorCapabilityController extends AbstractController {
     @RequestMapping("/save")
 //    @RequiresPermissions("sys:user:save")
     public R save(@RequestBody TraMajorCapabilityEntity traMajorCapabilityEntity) {
+        traMajorCapabilityEntity.setCreateTime(new Date());
         traMajorCapabilityService.save(traMajorCapabilityEntity);
         return R.ok();
     }

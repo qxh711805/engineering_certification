@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.binbinhan.modules.tra.service.TraCourseCapabilityListService;
 
+import java.util.Date;
 import java.util.Map;
 
 
@@ -44,6 +45,7 @@ public class TraCourseCapabilityListController extends AbstractController {
 
     @RequestMapping("/save")
     public R save(@RequestBody TraCourseCapabilityListEntity data) {
+        data.setCreateTime(new Date());
         traCourseCapabilityListService.save(data);
         return R.ok();
     }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.binbinhan.modules.tra.service.TraMajorCapabilityTargetService;
 
+import java.util.Date;
 import java.util.Map;
 
 
@@ -44,6 +45,7 @@ public class TraMajorCapabilityTargetController extends AbstractController {
 
     @RequestMapping("/save")
     public R save(@RequestBody TraMajorCapabilityTargetEntity data) {
+        data.setCreateTime(new Date());
         traMajorCapabilityTargetService.save(data);
         return R.ok();
     }

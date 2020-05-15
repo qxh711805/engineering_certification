@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.binbinhan.modules.tra.service.TraTrainingGoalSupportListService;
 
+import java.util.Date;
 import java.util.Map;
 
 
@@ -44,6 +45,7 @@ public class TraTrainingGoalSupportListController extends AbstractController {
 
     @RequestMapping("/save")
     public R save(@RequestBody TraTrainingGoalSupportListEntity data) {
+        data.setCreateTime(new Date());
         traTrainingGoalSupportListService.save(data);
         return R.ok();
     }

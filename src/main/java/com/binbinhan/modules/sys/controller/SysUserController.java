@@ -355,7 +355,7 @@ public class SysUserController extends AbstractController {
         String error = "";
         for (SysUserEntity s : list) {
             if (usernameList.contains(s.getUsername())) {
-                error += "第" + i + "行设备标识符IMEI重复！\n";
+                error += "第" + i + "行学号/工号重复！\n";
             }
             i++;
         }

@@ -218,8 +218,8 @@ public class EasyExcelUtils {
         ImportParams params = new ImportParams();
         params.setTitleRows(titleRows);
         params.setHeadRows(headerRows);
-        params.setSaveUrl("/excel/");
-        params.setNeedSave(true);
+//        params.setSaveUrl("/excel/");
+//        params.setNeedSave(true);
         params.setNeedVerfiy(needVerfiy);
         params.setStartSheetIndex(sheetIndex);
         try {
