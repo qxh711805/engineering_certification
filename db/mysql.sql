@@ -91,6 +91,8 @@ INSERT INTO `sys_menu` VALUES ('13', '4', '查看', null, 'sys:menu:list,sys:men
 INSERT INTO `sys_menu` VALUES ('14', '4', '新增', null, 'sys:menu:save,sys:menu:select', '2', null, '0');
 INSERT INTO `sys_menu` VALUES ('15', '4', '修改', null, 'sys:menu:update,sys:menu:select', '2', null, '0');
 INSERT INTO `sys_menu` VALUES ('16', '4', '删除', null, 'sys:menu:delete', '2', null, '0');
+INSERT INTO `sys_menu` VALUES ('17', '0', '培养方案', 'modules/tra/train.html', NULL, '1', 'fa fa-book', '0');
+
 
 -- ----------------------------
 -- Table structure for sys_oss
